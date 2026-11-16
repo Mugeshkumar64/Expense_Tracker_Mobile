@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Expense_Tracker.ViewModels"
+             x:Class="Expense_Tracker.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             BackgroundColor="{StaticResource BgBase}"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="24" Padding="28" VerticalOptions="Center">
+            
+            <!-- Brand Header -->
+            <HorizontalStackLayout Spacing="14" HorizontalOptions="Center">
+                <Border WidthRequest="48" HeightRequest="48"
+                        StrokeShape="RoundRectangle 14"
+                        BackgroundColor="{StaticResource AccentPrimary}"
+                        StrokeThickness="0">
+                    <Label Text="⚡" FontSize="24" TextColor="White"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="ExpenseTrack" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                    <Label Text="Smart Shopping &amp; Finance" FontSize="13" TextColor="{StaticResource TextSub}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}"
+                    StrokeShape="RoundRectangle 20"
+                    Stroke="{StaticResource Line}"
+                    StrokeThickness="1"
+                    Padding="24">
+                <VerticalStackLayout Spacing="18">
+
+                    <!-- Tab Switcher -->
+                    <Border BackgroundColor="{StaticResource Surface}"
+                            StrokeShape="RoundRectangle 12"
+                            Stroke="{StaticResource Line}"
+                            StrokeThickness="1"
+                            Padding="4">
+                        <Grid ColumnDefinitions="*,*">
+                            <Button Text="Sign In"
+                                    Grid.Column="0"
+                                    BackgroundColor="{Binding TabSignInBgColor}"
+                                    TextColor="{Binding TabSignInTextColor}"
+                                    CornerRadius="10"
+                                    FontAttributes="Bold"
+                                    HeightRequest="40"
+                                    Command="{Binding SwitchToLoginCommand}" />
+                            <Button Text="Register"
+                                    Grid.Column="1"
+                                    BackgroundColor="{Binding TabRegisterBgColor}"
+                                    TextColor="{Binding TabRegisterTextColor}"
+                                    CornerRadius="10"
+                                    FontAttributes="Bold"
+                                    HeightRequest="40"
+                                    Command="{Binding SwitchToRegisterCommand}" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Full Name Field (Visible in Register Mode) -->
+                    <VerticalStackLayout Spacing="6" IsVisible="{Binding IsRegisterMode}">
+                        <Label Text="Full Name" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,4">
+                            <Entry Text="{Binding FullName, Mode=TwoWay}" Placeholder="John Doe" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Email Field -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Email Address" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,4">
+                            <Entry Text="{Binding Email, Mode=TwoWay}" Placeholder="user@example.com" Keyboard="Email" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Password Field -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Password" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,4">
+                            <Entry Text="{Binding Password, Mode=TwoWay}" Placeholder="••••••••" IsPassword="True" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Error Message Label -->
+                    <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Negative}" FontSize="12" HorizontalTextAlignment="Center" IsVisible="{Binding HasError}" />
+
+                    <!-- Submit Button -->
+                    <Button Text="{Binding SubmitButtonText}"
+                            BackgroundColor="{StaticResource AccentPrimary}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="12"
+                            HeightRequest="48"
+                            Command="{Binding SubmitCommand}"
+                            IsEnabled="{Binding IsNotBusy}" />
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource AccentPrimary}" />
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

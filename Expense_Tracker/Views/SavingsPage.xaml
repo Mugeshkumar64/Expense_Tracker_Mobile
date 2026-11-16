@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Expense_Tracker.Models"
+             x:Class="Expense_Tracker.Views.SavingsPage"
+             Title="Savings Tracker"
+             BackgroundColor="{StaticResource BgBase}">
+
+    <RefreshView x:Name="Refresher" Refreshing="OnRefreshing" RefreshColor="{StaticResource AccentPrimary}">
+        <ScrollView>
+            <VerticalStackLayout Spacing="18" Padding="16">
+
+                <!-- 4 KPI Cards -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                    <!-- Actual Savings -->
+                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Actual Savings" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblActSavings" Text="₹0" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
+                            <Label Text="vs usual shop" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Potential Savings -->
+                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Potential Savings" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblPotSavings" Text="₹0" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label Text="vs lowest recorded" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- List Planning -->
+                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="List Planning" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblListSavings" Text="₹0" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label Text="Current list estimate" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Actual via List -->
+                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Bought via List" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblListActSavings" Text="₹0" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
+                            <Label Text="Subset of actual" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Explanation Note -->
+                <Label Text="Actual savings compare the unit price paid with the latest earlier price at your usual shop. Potential savings compare your most recent purchase with the lowest recorded price." FontSize="11" TextColor="{StaticResource TextDim}" LineHeight="1.3" />
+
+                <!-- Actual Savings Log Header -->
+                <Label Text="Actual Savings Log" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,8,0,0" />
+                <VerticalStackLayout x:Name="LayoutActualLog" Spacing="8">
+                    <Label Text="No actual savings recorded yet." TextColor="{StaticResource TextDim}" FontSize="12" />
+                </VerticalStackLayout>
+
+                <!-- Monthly Actual Savings Trend Header -->
+                <Label Text="Monthly Actual Savings" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,8,0,0" />
+                <VerticalStackLayout x:Name="LayoutMonthlySavings" Spacing="8">
+                    <Label Text="No monthly savings trend yet." TextColor="{StaticResource TextDim}" FontSize="12" />
+                </VerticalStackLayout>
+
+                <!-- Highest Potential Savings Header -->
+                <Label Text="Highest Potential Savings (Estimates)" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,8,0,0" />
+                <VerticalStackLayout x:Name="LayoutPotentialLog" Spacing="8">
+                    <Label Text="No comparison data yet." TextColor="{StaticResource TextDim}" FontSize="12" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+
+</ContentPage>

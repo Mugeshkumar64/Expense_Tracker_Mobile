@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Expense_Tracker.Models"
+             x:Class="Expense_Tracker.Views.SmartShoppingPage"
+             Title="Smart Shopping"
+             BackgroundColor="{StaticResource BgBase}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="16">
+
+            <!-- Purchase Entry Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 20" Stroke="{StaticResource Line}" Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="🛒 Record Product Purchase" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+
+                    <!-- Product Name -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Product Name *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                            <Entry x:Name="TxtProductName" Placeholder="e.g. Rice, Milk, Cooking Oil" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Category & Unit -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Label Text="Category" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <Picker x:Name="PickerCategory" Title="Groceries" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextDim}" />
+                            </Border>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Unit" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <Picker x:Name="PickerUnit" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextDim}">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>kg</x:String>
+                                            <x:String>g</x:String>
+                                            <x:String>litre</x:String>
+                                            <x:String>ml</x:String>
+                                            <x:String>piece</x:String>
+                                            <x:String>packet</x:String>
+                                            <x:String>dozen</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                </Picker>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Quantity & Unit Price -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Label Text="Quantity *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <Entry x:Name="TxtQuantity" Text="1" Keyboard="Numeric" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" TextChanged="OnPriceOrQtyChanged" />
+                            </Border>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Unit Price (₹) *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <Entry x:Name="TxtUnitPrice" Placeholder="0.00" Keyboard="Numeric" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" TextChanged="OnPriceOrQtyChanged" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Total Price (Auto) -->
+                    <Border BackgroundColor="{StaticResource SurfaceHover}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="14,10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Total Price (Auto)" TextColor="{StaticResource TextSub}" FontSize="13" VerticalOptions="Center" />
+                            <Label Grid.Column="1" x:Name="LblTotalCalculated" Text="₹0.00" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource AccentPrimary}" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Shop Name & Location -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Label Text="Shop Name *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <Entry x:Name="TxtShopName" Placeholder="e.g. Supermart" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                            </Border>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Shop Location" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <Entry x:Name="TxtShopLocation" Placeholder="Optional" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Payment Method & Date -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Label Text="Payment" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <Picker x:Name="PickerPayment" TextColor="{StaticResource TextMain}">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>UPI</x:String>
+                                            <x:String>Cash</x:String>
+                                            <x:String>Credit Card</x:String>
+                                            <x:String>Debit Card</x:String>
+                                            <x:String>Other</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                </Picker>
+                            </Border>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Date" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                                <DatePicker x:Name="PickerDate" TextColor="{StaticResource TextMain}" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Linked Note -->
+                    <Label Text="ℹ Saving creates one linked expense transaction, so it is never counted twice." FontSize="11" TextColor="{StaticResource TextDim}" />
+
+                    <!-- Submit Button -->
+                    <Button x:Name="BtnSavePurchase" Text="Save Purchase"
+                            BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
+                            FontAttributes="Bold" CornerRadius="12" HeightRequest="48"
+                            Clicked="OnSavePurchaseClicked" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Recent Purchases Section -->
+            <Label Text="Recent Purchases" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,8,0,0" />
+
+            <VerticalStackLayout x:Name="LayoutPurchases" Spacing="8">
+                <Label Text="No purchases recorded yet." TextColor="{StaticResource TextDim}" FontSize="13" HorizontalOptions="Center" Padding="20" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Expense_Tracker.Models"
+             x:Class="Expense_Tracker.Views.TransactionsPage"
+             Title="Transactions"
+             BackgroundColor="{StaticResource BgBase}">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16,12">
+
+        <!-- Search Bar -->
+        <Border Grid.Row="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 14" Stroke="{StaticResource Line}" Padding="12,2" Margin="0,0,0,10">
+            <Grid ColumnDefinitions="Auto,*">
+                <Label Grid.Column="0" Text="🔍" FontSize="14" VerticalOptions="Center" Margin="0,0,8,0" />
+                <Entry Grid.Column="1" x:Name="TxtSearch" Placeholder="Search description, shop..."
+                       TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}"
+                       TextChanged="OnSearchTextChanged" />
+            </Grid>
+        </Border>
+
+        <!-- Filters Row -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="8" Margin="0,0,0,12">
+            <Button x:Name="BtnFilterAll" Text="All" CornerRadius="10" HeightRequest="36" Padding="12,0"
+                    BackgroundColor="{StaticResource AccentPrimary}" TextColor="White" FontAttributes="Bold"
+                    Clicked="OnFilterAllClicked" />
+            <Button x:Name="BtnFilterIncome" Text="Income" CornerRadius="10" HeightRequest="36" Padding="12,0"
+                    BackgroundColor="{StaticResource SurfaceCard}" TextColor="{StaticResource TextSub}"
+                    Clicked="OnFilterIncomeClicked" />
+            <Button x:Name="BtnFilterExpense" Text="Expense" CornerRadius="10" HeightRequest="36" Padding="12,0"
+                    BackgroundColor="{StaticResource SurfaceCard}" TextColor="{StaticResource TextSub}"
+                    Clicked="OnFilterExpenseClicked" />
+            <Picker x:Name="PickerCategory" Title="Category" HeightRequest="36" TextColor="{StaticResource TextMain}"
+                    TitleColor="{StaticResource TextSub}" BackgroundColor="{StaticResource SurfaceCard}"
+                    SelectedIndexChanged="OnCategorySelected" />
+        </HorizontalStackLayout>
+
+        <!-- Transactions List -->
+        <RefreshView Grid.Row="2" x:Name="Refresher" Refreshing="OnRefreshing" RefreshColor="{StaticResource AccentPrimary}">
+            <CollectionView x:Name="CvTransactions" EmptyView="No transactions found matching criteria.">
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Padding="30">
+                            <Label Text="📄" FontSize="36" HorizontalOptions="Center" />
+                            <Label Text="No records found" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" HorizontalOptions="Center" />
+                            <Label Text="Tap the '+' button below to add your first transaction." FontSize="12" TextColor="{StaticResource TextDim}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Transaction">
+                        <SwipeView Margin="0,0,0,8">
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem Text="Delete" BackgroundColor="{StaticResource Negative}" Invoked="OnDeleteTransactionInvoked" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 14" Stroke="{StaticResource Line}" Padding="14,12">
+                                <Grid ColumnDefinitions="40,*,Auto" ColumnSpacing="12">
+                                    <!-- Icon -->
+                                    <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                            StrokeShape="RoundRectangle 10"
+                                            BackgroundColor="{Binding IsIncome, Converter={StaticResource Key=Primary}, TargetNullValue='#162032'}"
+                                            StrokeThickness="0">
+                                        <Label Text="{Binding TypeIcon}" TextColor="{Binding AmountColor}"
+                                               FontSize="16" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <!-- Details -->
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="{Binding Title}" TextColor="{StaticResource TextMain}" FontSize="14" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Subtitle}" TextColor="{StaticResource TextDim}" FontSize="11" />
+                                    </VerticalStackLayout>
+                                    <!-- Amount -->
+                                    <Label Grid.Column="2" Text="{Binding FormattedAmount}" TextColor="{Binding AmountColor}"
+                                           FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Floating Add Button -->
+        <Button Grid.Row="2" Text="＋" FontSize="26" FontAttributes="Bold"
+                BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
+                WidthRequest="56" HeightRequest="56" CornerRadius="28"
+                HorizontalOptions="End" VerticalOptions="End" Margin="16"
+                Clicked="OnAddClicked" />
+
+    </Grid>
+
+</ContentPage>

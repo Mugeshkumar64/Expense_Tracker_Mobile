@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Expense_Tracker.Models"
+             x:Class="Expense_Tracker.Views.DashboardPage"
+             Title="Dashboard"
+             BackgroundColor="{StaticResource BgBase}">
+
+    <RefreshView x:Name="Refresher" Refreshing="OnRefreshing" RefreshColor="{StaticResource AccentPrimary}">
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" Padding="18">
+
+                <!-- User Top Bar -->
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label x:Name="LblGreeting" Text="Welcome Back!" FontSize="14" TextColor="{StaticResource TextSub}" />
+                        <Label x:Name="LblUserName" Text="Finance Workspace" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" WidthRequest="42" HeightRequest="42"
+                            StrokeShape="RoundRectangle 14"
+                            BackgroundColor="{StaticResource AccentPrimary}"
+                            StrokeThickness="0">
+                        <Label x:Name="LblAvatar" Text="ME" TextColor="White" FontAttributes="Bold" FontSize="14"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+
+                <!-- Total Balance Card -->
+                <Border BackgroundColor="{StaticResource SurfaceCard}"
+                        StrokeShape="RoundRectangle 20"
+                        Stroke="{StaticResource Line}"
+                        StrokeThickness="1"
+                        Padding="20">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="TOTAL NET BALANCE" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TextSub}" CharacterSpacing="1" />
+                        <Label x:Name="LblTotalBalance" Text="₹0" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                        <Label Text="Available net worth across all records" FontSize="12" TextColor="{StaticResource TextDim}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Monthly KPI Grid -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <!-- Income -->
+                    <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Income" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblIncome" Text="₹0" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
+                            <Label Text="This month" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Expense -->
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Expenses" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblExpense" Text="₹0" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Negative}" />
+                            <Label Text="This month" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Savings -->
+                    <Border Grid.Column="2" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Savings" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblSavings" Text="₹0" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label x:Name="LblSavingsPct" Text="0% saved" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Budget & Savings Overview Grid -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <!-- Shopping Budget Left -->
+                    <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Shopping Budget Left" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblShopLeft" Text="–" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label x:Name="LblShopNote" Text="Based on monthly limit" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Budget Used -->
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Monthly Budget Used" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblBudgetUsed" Text="–" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label Text="Expenses vs budget" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Potential & Actual Savings Grid -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <!-- Potential Savings -->
+                    <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Potential Savings" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblPotSavings" Text="₹0" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
+                            <Label Text="vs lowest recorded" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Actual Savings -->
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Actual Savings" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblActSavings" Text="₹0" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
+                            <Label Text="vs usual shop" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Smart Insights Panel -->
+                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="18">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="💡 Smart Insights" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                        <VerticalStackLayout x:Name="LayoutInsights" Spacing="8">
+                            <Label Text="No insights available yet. Record purchases to view analysis." TextColor="{StaticResource TextDim}" FontSize="12" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Price Movers Panel -->
+                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="18">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="📊 Price Movers" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                        <VerticalStackLayout x:Name="LayoutMovers" Spacing="8">
+                            <Label Text="Repeat purchases of a product reveal price changes." TextColor="{StaticResource TextDim}" FontSize="12" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Recent Transactions Header -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                    <Label Text="Recent Transactions" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" VerticalOptions="Center" />
+                    <Button Text="View All" TextColor="{StaticResource AccentPrimary}" BackgroundColor="Transparent" FontSize="13" FontAttributes="Bold" Clicked="OnViewAllClicked" />
+                </Grid>
+
+                <!-- Recent Transactions List -->
+                <VerticalStackLayout x:Name="LayoutRecentTx" Spacing="8">
+                    <Label Text="No records registered yet." TextColor="{StaticResource TextDim}" FontSize="13" HorizontalOptions="Center" Padding="20" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+
+</ContentPage>

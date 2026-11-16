@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Expense_Tracker.Models"
+             x:Class="Expense_Tracker.Views.CategoriesPage"
+             Title="Categories"
+             BackgroundColor="{StaticResource BgBase}">
+
+    <Grid RowDefinitions="Auto,*" Padding="16,12">
+
+        <!-- Top Actions & Filter Row -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto,*,Auto" ColumnSpacing="8" Margin="0,0,0,12">
+            <Button x:Name="BtnFilterAll" Text="All" CornerRadius="10" HeightRequest="36" Padding="12,0"
+                    BackgroundColor="{StaticResource AccentPrimary}" TextColor="White" FontAttributes="Bold"
+                    Clicked="OnFilterAllClicked" />
+            <Button Grid.Column="1" x:Name="BtnFilterExpense" Text="Expense" CornerRadius="10" HeightRequest="36" Padding="12,0"
+                    BackgroundColor="{StaticResource SurfaceCard}" TextColor="{StaticResource TextSub}"
+                    Clicked="OnFilterExpenseClicked" />
+            <Button Grid.Column="2" x:Name="BtnFilterIncome" Text="Income" CornerRadius="10" HeightRequest="36" Padding="12,0"
+                    BackgroundColor="{StaticResource SurfaceCard}" TextColor="{StaticResource TextSub}"
+                    Clicked="OnFilterIncomeClicked" />
+            <Button Grid.Column="4" Text="＋ Add" CornerRadius="10" HeightRequest="36" Padding="14,0"
+                    BackgroundColor="{StaticResource AccentPrimary}" TextColor="White" FontAttributes="Bold"
+                    Clicked="OnAddCategoryClicked" />
+        </Grid>
+
+        <!-- Categories List -->
+        <RefreshView Grid.Row="1" x:Name="Refresher" Refreshing="OnRefreshing" RefreshColor="{StaticResource AccentPrimary}">
+            <CollectionView x:Name="CvCategories">
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Padding="30">
+                            <Label Text="🏷️" FontSize="36" HorizontalOptions="Center" />
+                            <Label Text="No categories found" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Category">
+                        <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="16" Margin="0,0,0,10">
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                    <Label Text="{Binding Name}" TextColor="{StaticResource TextMain}" FontSize="16" FontAttributes="Bold" />
+                                    <Label Text="{Binding EntriesSummary}" TextColor="{StaticResource TextDim}" FontSize="12" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="{Binding FormattedTotal}" TextColor="{StaticResource TextMain}" FontAttributes="Bold" FontSize="15" HorizontalOptions="End" />
+                                    <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Padding="8,2" HorizontalOptions="End">
+                                        <Label Text="{Binding Type}" TextColor="{Binding BadgeColor}" FontSize="11" FontAttributes="Bold" TextTransform="Uppercase" />
+                                    </Border>
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="2" Text="🗑" BackgroundColor="Transparent" TextColor="{StaticResource Negative}"
+                                        FontSize="16" Padding="4,0" HeightRequest="36" VerticalOptions="Center"
+                                        Clicked="OnDeleteCategoryClicked" CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Expense_Tracker.Models"
+             x:Class="Expense_Tracker.Views.PriceComparePage"
+             Title="Price Comparison"
+             BackgroundColor="{StaticResource BgBase}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="16">
+
+            <!-- Search & Quantity Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Compare Product Across Shops" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                    
+                    <Grid ColumnDefinitions="*,100,Auto" ColumnSpacing="8">
+                        <Border Grid.Column="0" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" Padding="8,0">
+                            <Entry x:Name="TxtSearchProduct" Placeholder="Product (e.g. Rice)" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" FontSize="13" />
+                        </Border>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" Padding="8,0">
+                            <Entry x:Name="TxtCompareQty" Text="1" Keyboard="Numeric" TextColor="{StaticResource TextMain}" FontSize="13" />
+                        </Border>
+                        <Button Grid.Column="2" Text="Compare" BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
+                                FontAttributes="Bold" CornerRadius="10" HeightRequest="40" Padding="14,0"
+                                Clicked="OnCompareClicked" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Results Section (Visible after comparing) -->
+            <VerticalStackLayout x:Name="LayoutResults" Spacing="16" IsVisible="False">
+
+                <!-- 4 KPI Cards -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                    <!-- Lowest Price -->
+                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Lowest Price" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblLowestPrice" Text="₹0.00" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label x:Name="LblLowestDate" Text="as of date" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Cheapest Shop -->
+                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Cheapest Shop" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblCheapestShop" Text="Shop Name" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" LineBreakMode="TailTruncation" />
+                            <Label x:Name="LblShopsCompared" Text="Shops compared" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Last Purchase -->
+                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="My Last Paid" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblLastPaid" Text="₹0.00" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label x:Name="LblLastShop" Text="Shop" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Saving vs Last -->
+                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Saving vs Last" FontSize="11" TextColor="{StaticResource TextSub}" />
+                            <Label x:Name="LblSavingVsLast" Text="₹0.00" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
+                            <Label x:Name="LblSavingTotal" Text="on planned qty" FontSize="10" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Smart Shopping Suggestion Card -->
+                <Border BackgroundColor="#0F241C" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Positive}" StrokeThickness="1" Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="💡 Smart Shopping Suggestion" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
+                        <Label x:Name="LblSuggestion" Text="Buy at Shop B to save..." FontSize="13" TextColor="{StaticResource TextMain}" LineHeight="1.3" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Comparison by Shop Header -->
+                <Label Text="Recorded Prices Across Shops" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,4,0,0" />
+
+                <!-- Shop Rows Container -->
+                <VerticalStackLayout x:Name="LayoutShopRows" Spacing="8" />
+
+                <!-- Price History Header -->
+                <Label Text="Price History (Latest Records)" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,8,0,0" />
+
+                <!-- Price History Container -->
+                <VerticalStackLayout x:Name="LayoutHistoryRows" Spacing="8" />
+
+            </VerticalStackLayout>
+
+            <!-- Empty State Prompt -->
+            <VerticalStackLayout x:Name="LayoutEmpty" Spacing="10" Padding="30" HorizontalOptions="Center">
+                <Label Text="🔍" FontSize="36" HorizontalOptions="Center" />
+                <Label Text="Search a Product" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" HorizontalOptions="Center" />
+                <Label Text="Enter a product name above (e.g. 'Rice' or 'Cooking Oil') to compare its recorded prices across stores." FontSize="12" TextColor="{StaticResource TextDim}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

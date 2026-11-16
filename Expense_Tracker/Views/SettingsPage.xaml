@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Expense_Tracker.Views.SettingsPage"
+             Title="Settings"
+             BackgroundColor="{StaticResource BgBase}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="18">
+
+            <!-- API Server Configuration Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="18">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="🌐 Backend API Server URL" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                    <Label Text="Set the Web API host (e.g. http://localhost:5283 or http://10.0.2.2:5283 for Android emulator)." FontSize="11" TextColor="{StaticResource TextDim}" />
+                    
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Border Grid.Column="0" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" Padding="8,0">
+                            <Entry x:Name="TxtApiUrl" TextColor="{StaticResource TextMain}" FontSize="13" />
+                        </Border>
+                        <Button Grid.Column="1" Text="Update" BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
+                                FontAttributes="Bold" CornerRadius="10" HeightRequest="40" Padding="14,0"
+                                Clicked="OnUpdateApiUrlClicked" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Currency & Budgets Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="18">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="⚙️ Financial Preferences" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+
+                    <!-- Currency -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label Text="Currency Symbol" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label Text="Standard currency across cards" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" WidthRequest="80">
+                            <Picker x:Name="PickerCurrency" TextColor="{StaticResource TextMain}" HorizontalTextAlignment="Center">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>₹</x:String>
+                                        <x:String>$</x:String>
+                                        <x:String>€</x:String>
+                                        <x:String>£</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Border>
+                    </Grid>
+
+                    <!-- Monthly Budget -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label Text="Monthly Budget" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label Text="Total expense limit (0 = not set)" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" WidthRequest="110" Padding="8,0">
+                            <Entry x:Name="TxtMonthBudget" Keyboard="Numeric" TextColor="{StaticResource TextMain}" HorizontalTextAlignment="End" FontSize="13" />
+                        </Border>
+                    </Grid>
+
+                    <!-- Shopping Budget -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label Text="Shopping Budget" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label Text="Limit for product purchases" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" WidthRequest="110" Padding="8,0">
+                            <Entry x:Name="TxtShopBudget" Keyboard="Numeric" TextColor="{StaticResource TextMain}" HorizontalTextAlignment="End" FontSize="13" />
+                        </Border>
+                    </Grid>
+
+                    <!-- Target Shopping List Budget -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label Text="Shopping List Budget" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                            <Label Text="Budget for planned shopping items" FontSize="11" TextColor="{StaticResource TextDim}" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" WidthRequest="110" Padding="8,0">
+                            <Entry x:Name="TxtListBudget" Keyboard="Numeric" TextColor="{StaticResource TextMain}" HorizontalTextAlignment="End" FontSize="13" />
+                        </Border>
+                    </Grid>
+
+                    <Button Text="Save Settings" BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
+                            FontAttributes="Bold" CornerRadius="12" HeightRequest="44"
+                            Clicked="OnSaveSettingsClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Demo Data Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="18">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="🧪 Demo Shopping Data" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                    <Label Text="Sample purchases (Rice, Cooking Oil, Sugar, Milk across Shop A, B, C) for testing analysis." FontSize="11" TextColor="{StaticResource TextDim}" />
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0" Text="Load Demo" BackgroundColor="{StaticResource SurfaceHover}" TextColor="{StaticResource TextMain}"
+                                FontAttributes="Bold" CornerRadius="10" HeightRequest="40"
+                                Clicked="OnLoadDemoClicked" />
+                        <Button Grid.Column="1" Text="Remove Demo" BackgroundColor="{StaticResource SurfaceHover}" TextColor="{StaticResource Negative}"
+                                FontAttributes="Bold" CornerRadius="10" HeightRequest="40"
+                                Clicked="OnClearDemoClicked" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Reset & Logout Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="18">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="⚠️ Account &amp; Data Actions" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                    
+                    <Button Text="Wipe All Records (Reset)" BackgroundColor="{StaticResource SurfaceHover}" TextColor="{StaticResource Negative}"
+                            FontAttributes="Bold" CornerRadius="10" HeightRequest="42"
+                            Clicked="OnResetClicked" />
+
+                    <Button Text="Sign Out" BackgroundColor="{StaticResource Negative}" TextColor="White"
+                            FontAttributes="Bold" CornerRadius="10" HeightRequest="42"
+                            Clicked="OnLogoutClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,8 @@
+{
+  "DefaultBaseUrl": "http://localhost:5283/",
+  "AndroidBaseUrl": "http://10.0.2.2:5283/",
+  "ApiSettings": {
+    "DefaultBaseUrl": "http://localhost:5283/",
+    "AndroidBaseUrl": "http://10.0.2.2:5283/"
+  }
+}

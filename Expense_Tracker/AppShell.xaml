@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Expense_Tracker.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Expense_Tracker.Views"
+    FlyoutBehavior="Flyout"
+
+    BackgroundColor="{StaticResource SurfaceCard}"
+    
+    Title="ExpenseTrack">
+    <!--FlyoutBackgroundColor="{StaticResource BgBase}"-->
+    <!-- Shell Header -->
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource SurfaceCard}" Padding="20,40,20,20">
+            <HorizontalStackLayout Spacing="14" VerticalOptions="Center">
+                <Border WidthRequest="44" HeightRequest="44"
+                        StrokeShape="RoundRectangle 14"
+                        BackgroundColor="{StaticResource AccentPrimary}"
+                        StrokeThickness="0">
+                    <Label Text="⚡" FontSize="22" TextColor="White"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="ExpenseTrack" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                    <Label Text="Smart Shopping &amp; Finance" FontSize="11" TextColor="{StaticResource TextSub}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Navigation Items -->
+    <FlyoutItem Title="Dashboard" Route="dashboard">
+        <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}"  />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Transactions" Route="transactions">
+        <ShellContent ContentTemplate="{DataTemplate views:TransactionsPage}"  />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Smart Shopping" Route="smartshopping">
+        <ShellContent ContentTemplate="{DataTemplate views:SmartShoppingPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Shopping List" Route="shoppinglist">
+        <ShellContent ContentTemplate="{DataTemplate views:ShoppingListPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Price Comparison" Route="pricecompare">
+        <ShellContent ContentTemplate="{DataTemplate views:PriceComparePage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Savings Tracker" Route="savings">
+        <ShellContent ContentTemplate="{DataTemplate views:SavingsPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Categories" Route="categories">
+        <ShellContent ContentTemplate="{DataTemplate views:CategoriesPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Shops Directory" Route="shops">
+        <ShellContent ContentTemplate="{DataTemplate views:ShopsPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Settings" Route="settings">
+        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+    </FlyoutItem>
+
+</Shell>
