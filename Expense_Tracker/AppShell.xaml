@@ -5,14 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Expense_Tracker.Views"
     FlyoutBehavior="Flyout"
-
     BackgroundColor="{StaticResource SurfaceCard}"
-    
+    FlyoutBackgroundColor="{StaticResource SurfaceCard}"
     Title="ExpenseTrack">
-    <!--FlyoutBackgroundColor="{StaticResource BgBase}"-->
+
     <!-- Shell Header -->
     <Shell.FlyoutHeader>
-        <Grid BackgroundColor="{StaticResource SurfaceCard}" Padding="20,40,20,20">
+        <Grid BackgroundColor="{StaticResource HeroBg}" Padding="20,40,20,20">
             <HorizontalStackLayout Spacing="14" VerticalOptions="Center">
                 <Border WidthRequest="44" HeightRequest="44"
                         StrokeShape="RoundRectangle 14"
@@ -22,8 +21,8 @@
                            HorizontalOptions="Center" VerticalOptions="Center" />
                 </Border>
                 <VerticalStackLayout VerticalOptions="Center">
-                    <Label Text="ExpenseTrack" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
-                    <Label Text="Smart Shopping &amp; Finance" FontSize="11" TextColor="{StaticResource TextSub}" />
+                    <Label Text="ExpenseTrack" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Smart Shopping &amp; Finance" FontSize="11" TextColor="#94A3B8" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
         </Grid>

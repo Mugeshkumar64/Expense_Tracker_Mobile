@@ -82,6 +82,15 @@ public partial class AddTransactionPage : ContentPage
         UpdateCategoryPicker();
     }
 
+    private void OnQuickAmountClicked(object sender, EventArgs e)
+    {
+        if (sender is Button btn && decimal.TryParse(btn.CommandParameter?.ToString(), out var addVal))
+        {
+            decimal.TryParse(TxtAmount.Text?.Trim(), out var curr);
+            TxtAmount.Text = (curr + addVal).ToString("0.##");
+        }
+    }
+
     private async void OnSaveClicked(object sender, EventArgs e)
     {
         var title = TxtTitle.Text?.Trim() ?? string.Empty;

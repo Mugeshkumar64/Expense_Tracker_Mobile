@@ -41,6 +41,18 @@ public partial class ShoppingListPage : ContentPage
                 LblEstimatedTotal.Text = d.FormattedEstimatedCost;
                 LblEstimatedSavings.Text = d.FormattedEstimatedSavings;
                 LblBudgetStatus.Text = d.BudgetStatusText;
+                LblItemCountBadge.Text = $"{d.Items.Count} items";
+                if (d.TargetBudget > 0)
+                {
+                    double fraction = (double)(d.TotalEstimatedCost / d.TargetBudget);
+                    ProgressBudget.Progress = Math.Clamp(fraction, 0.0, 1.0);
+                    LblBudgetPercent.Text = $"{(int)(fraction * 100)}%";
+                }
+                else
+                {
+                    ProgressBudget.Progress = d.TotalEstimatedCost > 0 ? 0.35 : 0;
+                    LblBudgetPercent.Text = "No limit";
+                }
                 RenderItems(d.Items);
             }
         }
@@ -224,6 +236,21 @@ public partial class ShoppingListPage : ContentPage
         else
         {
             await DisplayAlert("Error", res?.Message ?? "Failed to add item.", "OK");
+        }
+    }
+
+    private void OnStapleClicked(object sender, EventArgs e)
+    {
+        if (sender is Button btn && btn.CommandParameter is string param)
+        {
+            var parts = param.Split(':');
+            TxtItemName.Text = parts[0];
+            if (parts.Length > 1)
+            {
+                var idx = PickerItemUnit.Items.IndexOf(parts[1]);
+                if (idx >= 0) PickerItemUnit.SelectedIndex = idx;
+            }
+            TxtItemQty.Text = "1";
         }
     }
 }

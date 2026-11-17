@@ -68,7 +68,7 @@
                 </Grid>
 
                 <!-- Smart Shopping Suggestion Card -->
-                <Border BackgroundColor="#0F241C" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Positive}" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{StaticResource PositiveSoft}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource PositiveBorder}" StrokeThickness="1" Padding="16">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="💡 Smart Shopping Suggestion" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Positive}" />
                         <Label x:Name="LblSuggestion" Text="Buy at Shop B to save..." FontSize="13" TextColor="{StaticResource TextMain}" LineHeight="1.3" />

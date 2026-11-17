@@ -84,7 +84,7 @@ public class ShopComparisonRow
     public string FormattedTotal => $"₹{EstimatedTotal:N2}";
     public string FormattedDate => LastRecordedDate.ToString("yyyy-MM-dd");
     public string StatusBadge => IsLowestPrice ? "Lowest Price" : $"+₹{PriceDifferencePerUnit:N2}";
-    public string StatusColor => IsLowestPrice ? "#10B981" : "#F43F5E";
+    public string StatusColor => IsLowestPrice ? "#059669" : "#E11D48";
 }
 
 public class ProductPriceHistoryRecord

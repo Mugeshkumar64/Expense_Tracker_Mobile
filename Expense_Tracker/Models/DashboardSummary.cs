@@ -129,7 +129,7 @@ public class PriceMoverItem
     public bool IsIncrease { get; set; }
 
     public string ChangeIcon => IsIncrease ? "▲" : "▼";
-    public string ChangeColor => IsIncrease ? "#F43F5E" : "#10B981";
+    public string ChangeColor => IsIncrease ? "#E11D48" : "#059669";
     public string FormattedChange => $"{ChangeIcon} {PercentageChange:0.0}%";
     public string PriceSummary => $"{ProductName}: ₹{PreviousPrice:N2} → ₹{LatestPrice:N2}/{BaseUnit} at {ShopName}";
 }

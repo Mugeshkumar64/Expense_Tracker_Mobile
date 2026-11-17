@@ -71,7 +71,16 @@ public partial class TransactionsPage : ContentPage
 
             if (res != null && res.Success && res.Data != null)
             {
-                CvTransactions.ItemsSource = res.Data;
+                var list = res.Data;
+                CvTransactions.ItemsSource = list;
+                var incTotal = list.Where(x => x.IsIncome).Sum(x => x.Amount);
+                var expTotal = list.Where(x => !x.IsIncome).Sum(x => x.Amount);
+                var net = incTotal - expTotal;
+                LblTxCount.Text = $"{list.Count} entries";
+                LblTxIncome.Text = $"₹{incTotal:N0}";
+                LblTxExpense.Text = $"₹{expTotal:N0}";
+                LblNetFlow.Text = (net >= 0 ? "+₹" : "−₹") + $"{Math.Abs(net):N0}";
+                LblNetFlow.TextColor = net >= 0 ? Color.FromArgb("#6EE7B7") : Color.FromArgb("#FDA4AF");
             }
         }
         catch (Exception ex)

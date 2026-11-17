@@ -16,25 +16,31 @@
                         <Label x:Name="LblGreeting" Text="Welcome Back!" FontSize="14" TextColor="{StaticResource TextSub}" />
                         <Label x:Name="LblUserName" Text="Finance Workspace" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
                     </VerticalStackLayout>
-                    <Border Grid.Column="1" WidthRequest="42" HeightRequest="42"
+                    <Border Grid.Column="1" WidthRequest="44" HeightRequest="44"
                             StrokeShape="RoundRectangle 14"
-                            BackgroundColor="{StaticResource AccentPrimary}"
-                            StrokeThickness="0">
-                        <Label x:Name="LblAvatar" Text="ME" TextColor="White" FontAttributes="Bold" FontSize="14"
+                            BackgroundColor="{StaticResource AccentSoft}"
+                            Stroke="{StaticResource AccentBorder}"
+                            StrokeThickness="1">
+                        <Label x:Name="LblAvatar" Text="ME" TextColor="{StaticResource AccentPrimary}" FontAttributes="Bold" FontSize="14"
                                HorizontalOptions="Center" VerticalOptions="Center" />
                     </Border>
                 </Grid>
 
-                <!-- Total Balance Card -->
-                <Border BackgroundColor="{StaticResource SurfaceCard}"
-                        StrokeShape="RoundRectangle 20"
-                        Stroke="{StaticResource Line}"
+                <!-- Total Balance Card (Midnight Navy Hero Card) -->
+                <Border BackgroundColor="{StaticResource HeroBg}"
+                        StrokeShape="RoundRectangle 22"
+                        Stroke="{StaticResource HeroBorder}"
                         StrokeThickness="1"
-                        Padding="20">
+                        Padding="22,20">
                     <VerticalStackLayout Spacing="6">
-                        <Label Text="TOTAL NET BALANCE" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TextSub}" CharacterSpacing="1" />
-                        <Label x:Name="LblTotalBalance" Text="₹0" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
-                        <Label Text="Available net worth across all records" FontSize="12" TextColor="{StaticResource TextDim}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="TOTAL NET BALANCE" FontSize="11" FontAttributes="Bold" TextColor="#93C5FD" CharacterSpacing="1" VerticalOptions="Center" />
+                            <Border Grid.Column="1" BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="8,3">
+                                <Label Text="ACTIVE LEDGER" TextColor="#E2E8F0" FontSize="10" FontAttributes="Bold" CharacterSpacing="0.5" />
+                            </Border>
+                        </Grid>
+                        <Label x:Name="LblTotalBalance" Text="₹0" FontSize="34" FontAttributes="Bold" TextColor="White" Margin="0,4,0,2" />
+                        <Label Text="Available net worth across all records" FontSize="12" TextColor="#94A3B8" />
                     </VerticalStackLayout>
                 </Border>
 

@@ -6,12 +6,12 @@
              BackgroundColor="{StaticResource BgBase}">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="18" Padding="20">
+        <VerticalStackLayout Spacing="16" Padding="18">
 
             <!-- Type Toggle -->
-            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="4">
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 14" Stroke="{StaticResource Line}" Padding="4">
                 <Grid ColumnDefinitions="*,*">
-                    <Button x:Name="BtnTypeExpense" Text="Expense"
+                    <Button x:Name="BtnTypeExpense" Text="↑ Expense"
                             Grid.Column="0"
                             BackgroundColor="{StaticResource Negative}"
                             TextColor="White"
@@ -19,7 +19,7 @@
                             CornerRadius="10"
                             HeightRequest="42"
                             Clicked="OnTypeExpenseClicked" />
-                    <Button x:Name="BtnTypeIncome" Text="Income"
+                    <Button x:Name="BtnTypeIncome" Text="↓ Income"
                             Grid.Column="1"
                             BackgroundColor="Transparent"
                             TextColor="{StaticResource TextSub}"
@@ -30,74 +30,113 @@
                 </Grid>
             </Border>
 
-            <!-- Title Field -->
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Title / Description *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
-                    <Entry x:Name="TxtTitle" Placeholder="e.g. Salary, Groceries, Coffee" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
-                </Border>
-            </VerticalStackLayout>
+            <!-- Amount Hero Card (Midnight Navy) -->
+            <Border BackgroundColor="{StaticResource HeroBg}" StrokeShape="RoundRectangle 22" Stroke="{StaticResource HeroBorder}" Padding="20,18">
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Fill">
+                    <Label Text="ENTER AMOUNT" FontSize="11" FontAttributes="Bold" TextColor="#93C5FD" CharacterSpacing="1" HorizontalOptions="Center" />
+                    
+                    <Grid ColumnDefinitions="Auto,*" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="₹" FontSize="32" FontAttributes="Bold" TextColor="#CBD5E1" VerticalOptions="Center" Margin="0,0,6,0" />
+                        <Entry Grid.Column="1" x:Name="TxtAmount" Placeholder="0" Keyboard="Numeric"
+                               TextColor="White" PlaceholderColor="#64748B" FontSize="36" FontAttributes="Bold"
+                               VerticalOptions="Center" WidthRequest="180" HorizontalTextAlignment="Start" />
+                    </Grid>
 
-            <!-- Amount Field -->
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Amount (₹) *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
-                    <Entry x:Name="TxtAmount" Placeholder="0.00" Keyboard="Numeric" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
-                </Border>
-            </VerticalStackLayout>
+                    <!-- Quick Amount Chips -->
+                    <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" Margin="0,6,0,0">
+                        <Button Text="+100" FontSize="12" FontAttributes="Bold" BackgroundColor="#1E293B" TextColor="#E2E8F0"
+                                CornerRadius="14" HeightRequest="32" Padding="12,0" Clicked="OnQuickAmountClicked" CommandParameter="100" />
+                        <Button Text="+500" FontSize="12" FontAttributes="Bold" BackgroundColor="#1E293B" TextColor="#E2E8F0"
+                                CornerRadius="14" HeightRequest="32" Padding="12,0" Clicked="OnQuickAmountClicked" CommandParameter="500" />
+                        <Button Text="+1,000" FontSize="12" FontAttributes="Bold" BackgroundColor="#1E293B" TextColor="#E2E8F0"
+                                CornerRadius="14" HeightRequest="32" Padding="12,0" Clicked="OnQuickAmountClicked" CommandParameter="1000" />
+                        <Button Text="+5,000" FontSize="12" FontAttributes="Bold" BackgroundColor="#1E293B" TextColor="#E2E8F0"
+                                CornerRadius="14" HeightRequest="32" Padding="12,0" Clicked="OnQuickAmountClicked" CommandParameter="5000" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
 
-            <!-- Category Field -->
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Category *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
-                    <Picker x:Name="PickerCategory" Title="Select category" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextDim}" />
-                </Border>
-            </VerticalStackLayout>
+            <!-- Details Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="16">
+                <VerticalStackLayout Spacing="14">
+                    <!-- Title Field -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Title / Description *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="✏️" FontSize="14" VerticalOptions="Center" Margin="0,0,8,0" />
+                                <Entry Grid.Column="1" x:Name="TxtTitle" Placeholder="e.g. Salary, Groceries, Coffee" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
 
-            <!-- Date Field -->
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Date *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
-                    <DatePicker x:Name="PickerDate" TextColor="{StaticResource TextMain}" />
-                </Border>
-            </VerticalStackLayout>
+                    <!-- Date Field -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Date *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="📅" FontSize="14" VerticalOptions="Center" Margin="0,0,8,0" />
+                                <DatePicker Grid.Column="1" x:Name="PickerDate" TextColor="{StaticResource TextMain}" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
 
-            <!-- Payment Method Field -->
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Payment Method" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
-                    <Picker x:Name="PickerPayment" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextDim}">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>UPI</x:String>
-                                <x:String>Credit Card</x:String>
-                                <x:String>Debit Card</x:String>
-                                <x:String>Bank Transfer</x:String>
-                                <x:String>Cash</x:String>
-                                <x:String>Other</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                </Border>
-            </VerticalStackLayout>
+                    <!-- Category Field -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Category *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="🏷️" FontSize="14" VerticalOptions="Center" Margin="0,0,8,0" />
+                                <Picker Grid.Column="1" x:Name="PickerCategory" Title="Select category" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextDim}" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
 
-            <!-- Notes Field -->
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Notes (Optional)" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,4">
-                    <Editor x:Name="TxtNotes" Placeholder="Optional reference notes..." HeightRequest="80" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
-                </Border>
-            </VerticalStackLayout>
+                    <!-- Payment Method Field -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Payment Method" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="📱" FontSize="14" VerticalOptions="Center" Margin="0,0,8,0" />
+                                <Picker Grid.Column="1" x:Name="PickerPayment" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextDim}">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>UPI</x:String>
+                                            <x:String>Credit Card</x:String>
+                                            <x:String>Debit Card</x:String>
+                                            <x:String>Bank Transfer</x:String>
+                                            <x:String>Cash</x:String>
+                                            <x:String>Other</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                </Picker>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Notes Field -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Notes (Optional)" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,4">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="📝" FontSize="14" VerticalOptions="Start" Margin="0,8,8,0" />
+                                <Editor Grid.Column="1" x:Name="TxtNotes" Placeholder="Optional reference notes..." HeightRequest="70" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
 
             <!-- Action Buttons -->
-            <VerticalStackLayout Spacing="10" Margin="0,10,0,0">
+            <VerticalStackLayout Spacing="10" Margin="0,4,0,16">
                 <Button x:Name="BtnSave" Text="Save Record"
                         BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
-                        FontAttributes="Bold" CornerRadius="12" HeightRequest="48"
+                        FontAttributes="Bold" CornerRadius="14" HeightRequest="50"
                         Clicked="OnSaveClicked" />
                 <Button Text="Cancel"
                         BackgroundColor="{StaticResource SurfaceCard}" TextColor="{StaticResource TextMain}"
-                        FontAttributes="Bold" CornerRadius="12" HeightRequest="48"
+                        BorderColor="{StaticResource Line}" BorderWidth="1"
+                        FontAttributes="Bold" CornerRadius="14" HeightRequest="46"
                         Clicked="OnCancelClicked" />
             </VerticalStackLayout>
 

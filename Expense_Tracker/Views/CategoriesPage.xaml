@@ -38,21 +38,25 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Category">
                         <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 16" Stroke="{StaticResource Line}" Padding="16" Margin="0,0,0,10">
-                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
-                                <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                    <Label Text="{Binding Name}" TextColor="{StaticResource TextMain}" FontSize="16" FontAttributes="Bold" />
-                                    <Label Text="{Binding EntriesSummary}" TextColor="{StaticResource TextDim}" FontSize="12" />
+                            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="42" HeightRequest="42" StrokeShape="RoundRectangle 12" BackgroundColor="{Binding IconTint}" StrokeThickness="0" VerticalOptions="Center">
+                                    <Label Text="{Binding Icon}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="{Binding Name}" TextColor="{StaticResource TextMain}" FontSize="15" FontAttributes="Bold" />
+                                    <Label Text="{Binding EntriesSummary}" TextColor="{StaticResource TextDim}" FontSize="11" />
                                 </VerticalStackLayout>
 
-                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Spacing="2">
-                                    <Label Text="{Binding FormattedTotal}" TextColor="{StaticResource TextMain}" FontAttributes="Bold" FontSize="15" HorizontalOptions="End" />
-                                    <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Padding="8,2" HorizontalOptions="End">
-                                        <Label Text="{Binding Type}" TextColor="{Binding BadgeColor}" FontSize="11" FontAttributes="Bold" TextTransform="Uppercase" />
+                                <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Spacing="3">
+                                    <Label Text="{Binding FormattedTotal}" TextColor="{StaticResource TextMain}" FontAttributes="Bold" FontSize="14" HorizontalOptions="End" />
+                                    <Border BackgroundColor="{Binding BadgeBgColor}" StrokeShape="RoundRectangle 8" Padding="7,2" HorizontalOptions="End" StrokeThickness="0">
+                                        <Label Text="{Binding Type}" TextColor="{Binding BadgeColor}" FontSize="10" FontAttributes="Bold" TextTransform="Uppercase" />
                                     </Border>
                                 </VerticalStackLayout>
 
-                                <Button Grid.Column="2" Text="🗑" BackgroundColor="Transparent" TextColor="{StaticResource Negative}"
-                                        FontSize="16" Padding="4,0" HeightRequest="36" VerticalOptions="Center"
+                                <Button Grid.Column="3" Text="🗑" BackgroundColor="Transparent" TextColor="{StaticResource Negative}"
+                                        FontSize="15" Padding="4,0" HeightRequest="34" VerticalOptions="Center"
                                         Clicked="OnDeleteCategoryClicked" CommandParameter="{Binding .}" />
                             </Grid>
                         </Border>

@@ -12,9 +12,9 @@
             
             <!-- Brand Header -->
             <HorizontalStackLayout Spacing="14" HorizontalOptions="Center">
-                <Border WidthRequest="48" HeightRequest="48"
-                        StrokeShape="RoundRectangle 14"
-                        BackgroundColor="{StaticResource AccentPrimary}"
+                <Border WidthRequest="50" HeightRequest="50"
+                        StrokeShape="RoundRectangle 16"
+                        BackgroundColor="{StaticResource HeroBg}"
                         StrokeThickness="0">
                     <Label Text="⚡" FontSize="24" TextColor="White"
                            HorizontalOptions="Center" VerticalOptions="Center" />
@@ -27,7 +27,7 @@
 
             <!-- Card -->
             <Border BackgroundColor="{StaticResource SurfaceCard}"
-                    StrokeShape="RoundRectangle 20"
+                    StrokeShape="RoundRectangle 22"
                     Stroke="{StaticResource Line}"
                     StrokeThickness="1"
                     Padding="24">

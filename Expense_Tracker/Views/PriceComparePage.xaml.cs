@@ -74,8 +74,8 @@ public partial class PriceComparePage : ContentPage
         {
             var border = new Border
             {
-                BackgroundColor = Color.FromArgb(row.IsLowestPrice ? "#122A20" : "#162032"),
-                Stroke = row.IsLowestPrice ? (Color)Application.Current!.Resources["Positive"] : (Color)Application.Current!.Resources["Line"],
+                BackgroundColor = Color.FromArgb(row.IsLowestPrice ? "#ECFDF5" : "#FFFFFF"),
+                Stroke = row.IsLowestPrice ? (Color)Application.Current!.Resources["PositiveBorder"] : (Color)Application.Current!.Resources["Line"],
                 StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 14 },
                 Padding = new Thickness(14, 12)
             };

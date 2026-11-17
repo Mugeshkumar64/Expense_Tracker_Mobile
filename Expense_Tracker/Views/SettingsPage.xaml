@@ -99,7 +99,7 @@
                         <Button Grid.Column="0" Text="Load Demo" BackgroundColor="{StaticResource SurfaceHover}" TextColor="{StaticResource TextMain}"
                                 FontAttributes="Bold" CornerRadius="10" HeightRequest="40"
                                 Clicked="OnLoadDemoClicked" />
-                        <Button Grid.Column="1" Text="Remove Demo" BackgroundColor="{StaticResource SurfaceHover}" TextColor="{StaticResource Negative}"
+                        <Button Grid.Column="1" Text="Remove Demo" BackgroundColor="{StaticResource NegativeSoft}" TextColor="{StaticResource Negative}"
                                 FontAttributes="Bold" CornerRadius="10" HeightRequest="40"
                                 Clicked="OnClearDemoClicked" />
                     </Grid>
@@ -111,7 +111,7 @@
                 <VerticalStackLayout Spacing="14">
                     <Label Text="⚠️ Account &amp; Data Actions" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
                     
-                    <Button Text="Wipe All Records (Reset)" BackgroundColor="{StaticResource SurfaceHover}" TextColor="{StaticResource Negative}"
+                    <Button Text="Wipe All Records (Reset)" BackgroundColor="{StaticResource NegativeSoft}" TextColor="{StaticResource Negative}"
                             FontAttributes="Bold" CornerRadius="10" HeightRequest="42"
                             Clicked="OnResetClicked" />
 

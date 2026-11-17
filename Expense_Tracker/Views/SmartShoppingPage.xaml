@@ -7,12 +7,43 @@
              BackgroundColor="{StaticResource BgBase}">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="20" Padding="16">
+        <VerticalStackLayout Spacing="16" Padding="16">
 
-            <!-- Purchase Entry Card -->
-            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 20" Stroke="{StaticResource Line}" Padding="20">
-                <VerticalStackLayout Spacing="16">
-                    <Label Text="🛒 Record Product Purchase" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+            <!-- Live Calculation Hero Card (Midnight Navy) -->
+            <Border BackgroundColor="{StaticResource HeroBg}" StrokeShape="RoundRectangle 22" Stroke="{StaticResource HeroBorder}" Padding="20,18">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="🛒 PURCHASE TOTAL" FontSize="11" FontAttributes="Bold" TextColor="#93C5FD" CharacterSpacing="1" VerticalOptions="Center" />
+                        <Border Grid.Column="1" BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="8,3">
+                            <Label Text="AUTO-LINKED EXPENSE" TextColor="#6EE7B7" FontSize="9" FontAttributes="Bold" CharacterSpacing="0.5" />
+                        </Border>
+                    </Grid>
+                    <Label x:Name="LblTotalCalculated" Text="₹0.00" FontSize="36" FontAttributes="Bold" TextColor="White" Margin="0,2,0,8" />
+                    
+                    <Grid ColumnDefinitions="*,1.2*" ColumnSpacing="10">
+                        <Border Grid.Column="0" BackgroundColor="#1E293B" Stroke="{StaticResource HeroBorder}" StrokeShape="RoundRectangle 12" Padding="10,8">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="QUANTITY *" FontSize="9" FontAttributes="Bold" TextColor="#94A3B8" CharacterSpacing="0.5" />
+                                <Entry x:Name="TxtQuantity" Text="1" Keyboard="Numeric" TextColor="White" FontSize="16" FontAttributes="Bold" TextChanged="OnPriceOrQtyChanged" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" BackgroundColor="#1E293B" Stroke="{StaticResource HeroBorder}" StrokeShape="RoundRectangle 12" Padding="10,8">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="UNIT PRICE (₹) *" FontSize="9" FontAttributes="Bold" TextColor="#94A3B8" CharacterSpacing="0.5" />
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Label Grid.Column="0" Text="₹" TextColor="#93C5FD" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="0,0,4,0" />
+                                    <Entry Grid.Column="1" x:Name="TxtUnitPrice" Placeholder="0.00" Keyboard="Numeric" TextColor="White" PlaceholderColor="#64748B" FontSize="16" FontAttributes="Bold" TextChanged="OnPriceOrQtyChanged" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Product & Store Details Card -->
+            <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="16">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Product &amp; Store Details" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
 
                     <!-- Product Name -->
                     <VerticalStackLayout Spacing="6">
@@ -49,30 +80,6 @@
                             </Border>
                         </VerticalStackLayout>
                     </Grid>
-
-                    <!-- Quantity & Unit Price -->
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                        <VerticalStackLayout Grid.Column="0" Spacing="6">
-                            <Label Text="Quantity *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
-                                <Entry x:Name="TxtQuantity" Text="1" Keyboard="Numeric" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" TextChanged="OnPriceOrQtyChanged" />
-                            </Border>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="1" Spacing="6">
-                            <Label Text="Unit Price (₹) *" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextSub}" />
-                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
-                                <Entry x:Name="TxtUnitPrice" Placeholder="0.00" Keyboard="Numeric" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" TextChanged="OnPriceOrQtyChanged" />
-                            </Border>
-                        </VerticalStackLayout>
-                    </Grid>
-
-                    <!-- Total Price (Auto) -->
-                    <Border BackgroundColor="{StaticResource SurfaceHover}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="14,10">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <Label Text="Total Price (Auto)" TextColor="{StaticResource TextSub}" FontSize="13" VerticalOptions="Center" />
-                            <Label Grid.Column="1" x:Name="LblTotalCalculated" Text="₹0.00" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource AccentPrimary}" VerticalOptions="Center" />
-                        </Grid>
-                    </Border>
 
                     <!-- Shop Name & Location -->
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
@@ -117,19 +124,21 @@
                     </Grid>
 
                     <!-- Linked Note -->
-                    <Label Text="ℹ Saving creates one linked expense transaction, so it is never counted twice." FontSize="11" TextColor="{StaticResource TextDim}" />
+                    <Border BackgroundColor="{StaticResource PositiveSoft}" Stroke="{StaticResource PositiveBorder}" StrokeShape="RoundRectangle 12" Padding="12,10">
+                        <Label Text="⚡ Saving creates one linked expense transaction, so it is never counted twice." FontSize="11" FontAttributes="Bold" TextColor="{StaticResource Positive}" LineHeight="1.3" />
+                    </Border>
 
                     <!-- Submit Button -->
                     <Button x:Name="BtnSavePurchase" Text="Save Purchase"
                             BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
-                            FontAttributes="Bold" CornerRadius="12" HeightRequest="48"
+                            FontAttributes="Bold" CornerRadius="14" HeightRequest="50"
                             Clicked="OnSavePurchaseClicked" />
 
                 </VerticalStackLayout>
             </Border>
 
             <!-- Recent Purchases Section -->
-            <Label Text="Recent Purchases" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,8,0,0" />
+            <Label Text="Recent Purchases" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,4,0,0" />
 
             <VerticalStackLayout x:Name="LayoutPurchases" Spacing="8">
                 <Label Text="No purchases recorded yet." TextColor="{StaticResource TextDim}" FontSize="13" HorizontalOptions="Center" Padding="20" />

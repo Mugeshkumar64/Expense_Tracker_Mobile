@@ -19,6 +19,8 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<NuGetAudit>false</NuGetAudit>
+		<NoWarn>$(NoWarn);NU1900</NoWarn>
 
 		<!-- Display name -->
 		<ApplicationTitle>Expense_Tracker</ApplicationTitle>

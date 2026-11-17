@@ -44,8 +44,8 @@ public class Transaction
     public DateTime CreatedAt { get; set; }
 
     public bool IsIncome => Type.Equals("income", StringComparison.OrdinalIgnoreCase);
-    public string AmountColor => IsIncome ? "#10B981" : "#F43F5E";
-    public string FormattedAmount => (IsIncome ? "+₹" : "-₹") + $"{Amount:N0}";
+    public string AmountColor => IsIncome ? "#059669" : "#E11D48";
+    public string FormattedAmount => (IsIncome ? "+₹" : "−₹") + $"{Amount:N0}";
     public string FormattedDate => Date.ToString("yyyy-MM-dd");
     public string TypeIcon => IsIncome ? "↓" : "↑";
     public string Subtitle => $"{CategoryName} · {FormattedDate}{(string.IsNullOrWhiteSpace(Shop) ? "" : " · " + Shop)}";

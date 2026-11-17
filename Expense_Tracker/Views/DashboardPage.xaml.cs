@@ -94,10 +94,10 @@ public partial class DashboardPage : ContentPage
         {
             var border = new Border
             {
-                BackgroundColor = Color.FromArgb("#162032"),
-                Stroke = (Color)Application.Current!.Resources["Line"],
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 10 },
-                Padding = new Thickness(12, 10),
+                BackgroundColor = (Color)Application.Current!.Resources["SurfaceCard"],
+                Stroke = (Color)Application.Current.Resources["Line"],
+                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
+                Padding = new Thickness(14, 10),
                 Content = new Label
                 {
                     Text = "• " + text,
@@ -231,10 +231,10 @@ public partial class DashboardPage : ContentPage
             // Icon
             var iconBorder = new Border
             {
-                WidthRequest = 36,
-                HeightRequest = 36,
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 10 },
-                BackgroundColor = Color.FromArgb(t.IsIncome ? "#122822" : "#2A1820"),
+                WidthRequest = 40,
+                HeightRequest = 40,
+                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
+                BackgroundColor = Color.FromArgb(t.IsIncome ? "#ECFDF5" : "#FFF1F2"),
                 StrokeThickness = 0,
                 Content = new Label
                 {

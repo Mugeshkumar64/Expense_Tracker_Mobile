@@ -8,21 +8,57 @@
 
     <RefreshView x:Name="Refresher" Refreshing="OnRefreshing" RefreshColor="{StaticResource AccentPrimary}">
         <ScrollView>
-            <VerticalStackLayout Spacing="18" Padding="16">
+            <VerticalStackLayout Spacing="16" Padding="16">
+
+                <!-- Shopping List & Budget Hero Card (Midnight Navy) -->
+                <Border BackgroundColor="{StaticResource HeroBg}" StrokeShape="RoundRectangle 22" Stroke="{StaticResource HeroBorder}" Padding="20,18">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="🛍️ ESTIMATED BASKET TOTAL" FontSize="11" FontAttributes="Bold" TextColor="#6EE7B7" CharacterSpacing="1" VerticalOptions="Center" />
+                            <Border Grid.Column="1" BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="8,3">
+                                <Label x:Name="LblItemCountBadge" Text="0 items" TextColor="#E2E8F0" FontSize="10" FontAttributes="Bold" />
+                            </Border>
+                        </Grid>
+                        <Label x:Name="LblEstimatedTotal" Text="₹0.00" FontSize="36" FontAttributes="Bold" TextColor="White" Margin="0,2,0,4" />
+                        
+                        <!-- Budget Progress Track -->
+                        <ProgressBar x:Name="ProgressBudget" Progress="0" ProgressColor="{StaticResource AccentPrimary}" HeightRequest="6" Margin="0,2,0,2" />
+                        
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,4">
+                            <Label x:Name="LblBudgetStatus" Text="Set target budget in Settings" FontSize="11" TextColor="#CBD5E1" FontAttributes="Bold" />
+                            <Label Grid.Column="1" x:Name="LblBudgetPercent" Text="0%" FontSize="11" TextColor="#94A3B8" FontAttributes="Bold" />
+                        </Grid>
+
+                        <!-- Savings Strip -->
+                        <Border BackgroundColor="#10281F" Stroke="#34D399" StrokeShape="RoundRectangle 12" StrokeThickness="1" Padding="12,8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="💡 Est. Savings vs Usual" FontSize="12" TextColor="#A7F3D0" VerticalOptions="Center" />
+                                <Label Grid.Column="1" x:Name="LblEstimatedSavings" Text="₹0.00" FontSize="14" FontAttributes="Bold" TextColor="White" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
 
                 <!-- Add List Item Card -->
                 <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Line}" Padding="16">
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="Add Planned Item" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Add Planned Item" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextMain}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="Auto-checks recorded prices" FontSize="11" TextColor="{StaticResource TextDim}" VerticalOptions="Center" />
+                        </Grid>
                         
-                        <Grid ColumnDefinitions="*,80,70,Auto" ColumnSpacing="8">
-                            <Border Grid.Column="0" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" Padding="8,0">
-                                <Entry x:Name="TxtItemName" Placeholder="Product" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" FontSize="13" />
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="12,2">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="🛒" FontSize="14" VerticalOptions="Center" Margin="0,0,8,0" />
+                                <Entry x:Name="TxtItemName" Placeholder="What do you plan to buy? (e.g. Rice, Milk)" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextDim}" FontSize="13" />
+                            </Grid>
+                        </Border>
+
+                        <Grid ColumnDefinitions="84,96,*" ColumnSpacing="8">
+                            <Border Grid.Column="0" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}" Padding="8,0">
+                                <Entry x:Name="TxtItemQty" Text="1" Keyboard="Numeric" TextColor="{StaticResource TextMain}" FontSize="13" HorizontalTextAlignment="Center" />
                             </Border>
-                            <Border Grid.Column="1" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}" Padding="8,0">
-                                <Entry x:Name="TxtItemQty" Text="1" Keyboard="Numeric" TextColor="{StaticResource TextMain}" FontSize="13" />
-                            </Border>
-                            <Border Grid.Column="2" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 10" Stroke="{StaticResource Line}">
+                            <Border Grid.Column="1" BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="{StaticResource Line}">
                                 <Picker x:Name="PickerItemUnit" TextColor="{StaticResource TextMain}" FontSize="12">
                                     <Picker.ItemsSource>
                                         <x:Array Type="{x:Type x:String}">
@@ -37,32 +73,30 @@
                                     </Picker.ItemsSource>
                                 </Picker>
                             </Border>
-                            <Button Grid.Column="3" Text="Add" BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
-                                    FontAttributes="Bold" CornerRadius="10" HeightRequest="40" Padding="14,0"
+                            <Button Grid.Column="2" Text="＋ Add Item" BackgroundColor="{StaticResource AccentPrimary}" TextColor="White"
+                                    FontAttributes="Bold" CornerRadius="12" HeightRequest="42"
                                     Clicked="OnAddItemClicked" />
                         </Grid>
-                    </VerticalStackLayout>
-                </Border>
 
-                <!-- Budget & Price Estimation Summary Card -->
-                <Border BackgroundColor="{StaticResource SurfaceCard}" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Positive}" StrokeThickness="1" Padding="16">
-                    <VerticalStackLayout Spacing="8">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <Label Text="Estimated Total:" TextColor="{StaticResource TextSub}" FontSize="13" VerticalOptions="Center" />
-                            <Label Grid.Column="1" x:Name="LblEstimatedTotal" Text="₹0.00" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextMain}" VerticalOptions="Center" />
-                        </Grid>
-
-                        <Label x:Name="LblBudgetStatus" Text="Set target budget in Settings" FontSize="12" TextColor="{StaticResource TextDim}" />
-                        
-                        <Grid ColumnDefinitions="*,Auto">
-                            <Label Text="Estimated Savings vs Usual:" TextColor="{StaticResource TextSub}" FontSize="12" VerticalOptions="Center" />
-                            <Label Grid.Column="1" x:Name="LblEstimatedSavings" Text="₹0.00" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Positive}" VerticalOptions="Center" />
-                        </Grid>
+                        <!-- Quick Staple Chips -->
+                        <HorizontalStackLayout Spacing="6" Margin="0,2,0,0">
+                            <Button Text="＋ Rice" FontSize="11" FontAttributes="Bold" BackgroundColor="{StaticResource Surface}" TextColor="{StaticResource TextSub}"
+                                    CornerRadius="14" HeightRequest="30" Padding="10,0" Clicked="OnStapleClicked" CommandParameter="Rice:kg" />
+                            <Button Text="＋ Milk" FontSize="11" FontAttributes="Bold" BackgroundColor="{StaticResource Surface}" TextColor="{StaticResource TextSub}"
+                                    CornerRadius="14" HeightRequest="30" Padding="10,0" Clicked="OnStapleClicked" CommandParameter="Milk:litre" />
+                            <Button Text="＋ Oil" FontSize="11" FontAttributes="Bold" BackgroundColor="{StaticResource Surface}" TextColor="{StaticResource TextSub}"
+                                    CornerRadius="14" HeightRequest="30" Padding="10,0" Clicked="OnStapleClicked" CommandParameter="Cooking Oil:litre" />
+                            <Button Text="＋ Sugar" FontSize="11" FontAttributes="Bold" BackgroundColor="{StaticResource Surface}" TextColor="{StaticResource TextSub}"
+                                    CornerRadius="14" HeightRequest="30" Padding="10,0" Clicked="OnStapleClicked" CommandParameter="Sugar:kg" />
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Items Header -->
-                <Label Text="Planned Items" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" Margin="4,4,0,0" />
+                <Grid ColumnDefinitions="*,Auto" Margin="4,4,0,0">
+                    <Label Text="Planned Items" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMain}" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Tap Buy to log purchase" FontSize="11" TextColor="{StaticResource TextDim}" VerticalOptions="Center" />
+                </Grid>
 
                 <!-- Items Container -->
                 <VerticalStackLayout x:Name="LayoutItems" Spacing="8">

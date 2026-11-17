@@ -87,11 +87,11 @@ public class LoginViewModel : BaseViewModel
 
     public bool HasError => !string.IsNullOrWhiteSpace(_errorMessage);
 
-    public Color TabSignInBgColor => IsSignInMode ? (Color)Application.Current!.Resources["AccentPrimary"] : Colors.Transparent;
-    public Color TabSignInTextColor => IsSignInMode ? Colors.White : (Color)Application.Current!.Resources["TextSub"];
+    public Color TabSignInBgColor => IsSignInMode ? (Color)Application.Current!.Resources["SurfaceCard"] : Colors.Transparent;
+    public Color TabSignInTextColor => IsSignInMode ? (Color)Application.Current!.Resources["AccentPrimary"] : (Color)Application.Current!.Resources["TextSub"];
 
-    public Color TabRegisterBgColor => IsRegisterMode ? (Color)Application.Current!.Resources["AccentPrimary"] : Colors.Transparent;
-    public Color TabRegisterTextColor => IsRegisterMode ? Colors.White : (Color)Application.Current!.Resources["TextSub"];
+    public Color TabRegisterBgColor => IsRegisterMode ? (Color)Application.Current!.Resources["SurfaceCard"] : Colors.Transparent;
+    public Color TabRegisterTextColor => IsRegisterMode ? (Color)Application.Current!.Resources["AccentPrimary"] : (Color)Application.Current!.Resources["TextSub"];
 
     public ICommand SwitchToLoginCommand { get; }
     public ICommand SwitchToRegisterCommand { get; }
@@ -114,6 +114,7 @@ public class LoginViewModel : BaseViewModel
 
     private async Task ExecuteSubmitAsync()
     {
+        await Task.CompletedTask;
         if (IsBusy) return;
 
         var email = Email.Trim();
