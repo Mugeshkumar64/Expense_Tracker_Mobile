@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ExpenseTrack · Mobile UI Reference</title>
+  <style>
+    @font-face {
+      font-family: "Open Sans";
+      src: url("Expense_Tracker/Resources/Fonts/OpenSans-Regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Open Sans";
+      src: url("Expense_Tracker/Resources/Fonts/OpenSans-Semibold.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600 800;
+      font-display: swap;
+    }
+    :root {
+      --primary: #F97316;
+      --primary-dark: #EA580C;
+      --secondary: #54627E;
+      --tertiary: #6B7C9E;
+      --bg-base: #04060A;
+      --surface: #121826;
+      --surface-card: #162032;
+      --surface-hover: #1C2438;
+      --line: #1E2638;
+      --accent-primary: #F97316;
+      --accent-secondary: #54627E;
+      --text-main: #F8FAFC;
+      --text-sub: #94A3B8;
+      --text-dim: #64748B;
+      --positive: #10B981;
+      --negative: #F43F5E;
+      --gold: #F59E0B;
+      --font: "Open Sans", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg-base); }
+    body {
+      color: var(--text-main);
+      font-family: var(--font);
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .device {
+      width: 100%;
+      max-width: 430px;
+      height: 100dvh;
+      min-height: 560px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-base);
+    }
+    .login-screen { height: 100%; overflow-y: auto; }
+    .login-content {
+      min-height: 100%;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+    .brand { display: flex; justify-content: center; align-items: center; gap: 14px; }
+    .brand-mark {
+      width: 48px; height: 48px; flex: 0 0 48px;
+      display: grid; place-items: center;
+      border-radius: 14px; background: var(--accent-primary);
+      color: #fff; font-size: 24px;
+    }
+    .brand-title { font-size: 22px; font-weight: 700; line-height: 1.35; }
+    .brand-subtitle { color: var(--text-sub); font-size: 13px; }
+    .card {
+      background: var(--surface-card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .login-card { border-radius: 20px; padding: 24px; }
+    .stack { display: flex; flex-direction: column; gap: 12px; }
+    .login-form { gap: 18px; }
+    .tabs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      padding: 4px; background: var(--surface);
+      border: 1px solid var(--line); border-radius: 12px;
+    }
+    .tab-button {
+      height: 40px; padding: 0 10px; border: 0; border-radius: 10px;
+      background: transparent; color: var(--text-sub); font-weight: 700;
+    }
+    .tab-button.active { background: var(--accent-primary); color: #fff; }
+    .field { display: flex; min-width: 0; flex-direction: column; gap: 6px; }
+    .field-label { color: var(--text-sub); font-size: 12px; font-weight: 700; }
+    .input-wrap {
+      display: flex; min-width: 0; align-items: center;
+      padding: 4px 12px; background: var(--surface);
+      border: 1px solid var(--line); border-radius: 12px;
+    }
+    .input-wrap input, .input-wrap select, .input-wrap textarea {
+      width: 100%; min-width: 0; min-height: 42px; padding: 0;
+      border: 0; outline: 0; background: transparent; color: var(--text-main);
+    }
+    .input-wrap textarea { min-height: 80px; padding: 10px 0; resize: vertical; }
+    input::placeholder, textarea::placeholder { color: var(--text-dim); opacity: 1; }
+    select option { background: var(--surface); color: var(--text-main); }
+    .button {
+      min-height: 44px; padding: 10px 14px; border: 0; border-radius: 8px;
+      background: var(--accent-primary); color: #fff; font-size: 14px;
+      font-weight: 400; line-height: 1.3;
+    }
+    .button.bold { font-weight: 700; }
+    .button.primary { background: var(--accent-primary); }
+    .button.secondary { background: var(--surface-card); color: var(--text-main); }
+    .button.soft { background: var(--surface-hover); color: var(--text-main); }
+    .button.negative { background: var(--negative); color: #fff; }
+    .button.text-button { min-height: 36px; padding: 0 8px; background: transparent; color: var(--accent-primary); font-size: 13px; font-weight: 700; }
+    .error-message { margin: 0; color: var(--negative); text-align: center; font-size: 12px; }
+    .workspace { display: none; height: 100%; }
+    .workspace.active { display: flex; flex-direction: column; }
+    .shell-bar {
+      height: 56px; flex: 0 0 56px; display: flex; align-items: center; gap: 16px;
+      padding: 0 16px; background: var(--surface-card); color: var(--text-sub);
+    }
+    .shell-bar h1 { margin: 0; overflow: hidden; font-size: 17px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+    .icon-button {
+      width: 36px; height: 40px; flex: 0 0 36px; padding: 0;
+      display: grid; place-items: center; border: 0; background: transparent;
+      color: var(--text-sub); font-size: 24px;
+    }
+    .icon-button.back { display: none; font-size: 28px; }
+    .page-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+    .page-scroll::-webkit-scrollbar { display: none; }
+    .page { display: none; padding: 16px; }
+    .page.active { display: block; }
+    .page.dashboard { padding: 18px; }
+    .section-stack { display: flex; flex-direction: column; gap: 18px; }
+    .dashboard-stack { gap: 20px; }
+    .user-bar { display: flex; align-items: center; justify-content: space-between; }
+    .greeting { color: var(--text-sub); font-size: 14px; }
+    .user-name { font-size: 20px; font-weight: 700; }
+    .avatar {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      border-radius: 14px; background: var(--accent-primary); color: #fff;
+      font-size: 14px; font-weight: 700;
+    }
+    .balance-card { padding: 20px; border-radius: 20px; }
+    .eyebrow { color: var(--text-sub); font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+    .balance-value { font-size: 32px; font-weight: 700; line-height: 1.35; }
+    .muted { color: var(--text-dim); }
+    .subtle { color: var(--text-sub); }
+    .tiny { font-size: 10px; }
+    .small { font-size: 11px; }
+    .text-12 { font-size: 12px; }
+    .text-13 { font-size: 13px; }
+    .text-14 { font-size: 14px; }
+    .text-15 { font-size: 15px; }
+    .text-16 { font-size: 16px; }
+    .bold { font-weight: 700; }
+    .positive { color: var(--positive); }
+    .negative-text { color: var(--negative); }
+    .gold { color: var(--gold); }
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .kpi-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .kpi { padding: 12px; border-radius: 16px; }
+    .kpi.two-col { padding: 14px; }
+    .kpi-value { margin-top: 2px; font-size: 16px; font-weight: 700; }
+    .kpi.two-col .kpi-value { font-size: 18px; }
+    .panel { padding: 18px; border-radius: 18px; }
+    .panel-title { margin: 0; font-size: 15px; font-weight: 700; }
+    .panel-content { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .row-between { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .section-heading { margin: 4px 0 0; font-size: 16px; font-weight: 700; }
+    .heading-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 8px 0 0; }
+    .form-card { padding: 20px; border-radius: 20px; }
+    .form-card-title { margin: 0; font-size: 16px; font-weight: 700; }
+    .form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .action-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    .type-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 4px; }
+    .type-toggle .button { border-radius: 10px; height: 42px; min-height: 42px; }
+    .filter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; overflow-x: auto; scrollbar-width: none; }
+    .filter-row .button { min-height: 36px; height: 36px; padding: 0 12px; border-radius: 10px; white-space: nowrap; }
+    .filter-row .button.selected { background: var(--accent-primary); color: #fff; }
+    .filter-row .button:not(.selected) { background: var(--surface-card); color: var(--text-sub); }
+    .filter-row select { width: auto; min-width: 112px; height: 36px; padding: 0 8px; border: 0; border-radius: 10px; background: var(--surface-card); color: var(--text-sub); }
+    .search-card { margin-bottom: 10px; padding: 2px 12px; border-radius: 14px; }
+    .search-inner { display: flex; align-items: center; gap: 8px; }
+    .search-inner input { width: 100%; height: 42px; border: 0; outline: 0; background: transparent; color: var(--text-main); }
+    .empty-state { padding: 30px; text-align: center; }
+    .empty-state .emoji { font-size: 36px; }
+    .empty-state h3 { margin: 8px 0; font-size: 16px; }
+    .empty-state p { margin: 0; color: var(--text-dim); font-size: 12px; }
+    .empty-copy { padding: 20px; color: var(--text-dim); text-align: center; font-size: 13px; }
+    .item-card { padding: 12px 14px; border-radius: 14px; }
+    .item-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 10px; }
+    .item-name { font-size: 14px; font-weight: 700; }
+    .item-subtitle { margin-top: 2px; color: var(--text-dim); font-size: 11px; }
+    .item-amount { font-size: 14px; font-weight: 700; white-space: nowrap; }
+    .icon-box { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; font-size: 16px; font-weight: 700; }
+    .transaction-grid { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+    .float-add {
+      position: absolute; right: 16px; bottom: 16px; z-index: 2;
+      width: 56px; height: 56px; margin: 0; padding: 0;
+      border-radius: 28px; font-size: 26px; font-weight: 700;
+      box-shadow: none;
+    }
+    .data-row { padding: 10px 14px; border-radius: 12px; }
+    .planned-form { display: grid; grid-template-columns: minmax(0, 1fr) 56px 66px auto; gap: 8px; }
+    .planned-form .input-wrap { padding: 0 8px; border-radius: 10px; }
+    .planned-form input, .planned-form select { min-height: 40px; font-size: 13px; }
+    .planned-form .button { min-height: 40px; height: 40px; padding: 0 14px; border-radius: 10px; }
+    .summary-card { border-color: var(--positive); }
+    .outline-positive { border-color: var(--positive); }
+    .settings-label { font-size: 13px; font-weight: 700; }
+    .settings-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; }
+    .compact-input { max-width: 110px; }
+    .compact-input.w80 { max-width: 80px; }
+    .settings-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .footnote { line-height: 1.4; }
+    .price-suggestion { background: #0F241C; border-color: var(--positive); }
+    .shop-price-low { background: #122A20; border-color: var(--positive); }
+    .shop-price-normal { background: var(--surface-card); }
+    .history-row { padding: 4px; }
+    .monthly-bar { height: 6px; overflow: hidden; border-radius: 4px; background: var(--surface); }
+    .monthly-bar span { display: block; width: 0; height: 100%; background: var(--accent-primary); }
+    .drawer-backdrop {
+      display: none; position: absolute; inset: 0; z-index: 5;
+      background: rgba(0,0,0,.55);
+    }
+    .drawer-backdrop.open { display: block; }
+    .drawer {
+      position: absolute; inset: 0 auto 0 0; width: min(320px, 84%);
+      overflow-y: auto; background: var(--surface-card);
+      transform: translateX(-102%); transition: transform .18s ease;
+    }
+    .drawer-backdrop.open .drawer { transform: translateX(0); }
+    .drawer-header { padding: 40px 20px 20px; background: var(--surface-card); }
+    .drawer-brand { display: flex; align-items: center; gap: 14px; }
+    .drawer-brand .brand-mark { width: 44px; height: 44px; flex-basis: 44px; border-radius: 14px; font-size: 22px; }
+    .drawer-brand .brand-title { font-size: 18px; }
+    .drawer-brand .brand-subtitle { font-size: 11px; }
+    .drawer-nav { padding: 8px 0; }
+    .drawer-nav button {
+      width: 100%; min-height: 48px; padding: 0 20px; text-align: left;
+      border: 0; background: transparent; color: var(--text-main);
+      font-size: 14px;
+    }
+    .drawer-nav button.active { color: var(--accent-primary); font-weight: 700; }
+    .dialog {
+      width: min(340px, calc(100vw - 40px)); padding: 22px;
+      border: 1px solid var(--line); border-radius: 18px;
+      background: var(--surface-card); color: var(--text-main);
+    }
+    .dialog::backdrop { background: rgba(0,0,0,.65); }
+    .dialog h2 { margin: 0 0 8px; font-size: 17px; }
+    .dialog p { margin: 0; color: var(--text-sub); line-height: 1.45; }
+    .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+    @media (min-width: 600px) {
+      body { display: grid; place-items: center; }
+      .device { height: min(844px, 100dvh); border: 1px solid #222b3a; }
+    }
+  </style>
+</head>
+<body>
+  <div class="device">
+    <section class="login-screen" id="loginScreen">
+      <div class="login-content">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">⚡</div>
+          <div>
+            <div class="brand-title">ExpenseTrack</div>
+            <div class="brand-subtitle">Smart Shopping &amp; Finance</div>
+          </div>
+        </div>
+        <div class="card login-card">
+          <form class="stack login-form" id="loginForm">
+            <div class="tabs">
+              <button class="tab-button active" id="signInTab" type="button">Sign In</button>
+              <button class="tab-button" id="registerTab" type="button">Register</button>
+            </div>
+            <label class="field register-field" id="fullNameField" hidden>
+              <span class="field-label">Full Name</span>
+              <span class="input-wrap"><input id="fullName" type="text" placeholder="John Doe" autocomplete="name"></span>
+            </label>
+            <label class="field">
+              <span class="field-label">Email Address</span>
+              <span class="input-wrap"><input id="email" type="email" placeholder="user@example.com" autocomplete="email"></span>
+            </label>
+            <label class="field">
+              <span class="field-label">Password</span>
+              <span class="input-wrap"><input id="password" type="password" placeholder="••••••••" autocomplete="current-password"></span>
+            </label>
+            <p class="error-message" id="loginError" hidden></p>
+            <button class="button bold primary" id="loginSubmit" type="submit">Sign In to Dashboard</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <div class="workspace" id="workspace">
+      <header class="shell-bar">
+        <button class="icon-button" id="menuButton" aria-label="Open navigation menu"><span class="hamburger" aria-hidden="true">☰</span></button>
+        <button class="icon-button back" id="backButton" aria-label="Back">‹</button>
+        <h1 id="pageTitle">Dashboard</h1>
+      </header>
+      <main class="page-scroll" id="pageScroll">
+        <section class="page dashboard" id="page-dashboard">
+          <div class="section-stack dashboard-stack">
+            <div class="user-bar">
+              <div><div class="greeting">Welcome Back!</div><div class="user-name" id="dashboardName">Finance Workspace</div></div>
+              <div class="avatar" id="dashboardAvatar">ME</div>
+            </div>
+            <div class="card balance-card">
+              <div class="eyebrow">TOTAL NET BALANCE</div>
+              <div class="balance-value" id="balanceValue">₹0</div>
+              <div class="text-12 muted">Available net worth across all records</div>
+            </div>
+            <div class="kpi-grid">
+              <div class="card kpi"><div class="small subtle">Income</div><div class="kpi-value positive" id="incomeValue">₹0</div><div class="tiny muted">This month</div></div>
+              <div class="card kpi"><div class="small subtle">Expenses</div><div class="kpi-value negative-text" id="expenseValue">₹0</div><div class="tiny muted">This month</div></div>
+              <div class="card kpi"><div class="small subtle">Savings</div><div class="kpi-value" id="savingsValue">₹0</div><div class="tiny muted">0% saved</div></div>
+            </div>
+            <div class="kpi-grid two">
+              <div class="card kpi two-col"><div class="small subtle">Shopping Budget Left</div><div class="kpi-value">–</div><div class="small muted">Based on monthly limit</div></div>
+              <div class="card kpi two-col"><div class="small subtle">Monthly Budget Used</div><div class="kpi-value">–</div><div class="small muted">Expenses vs budget</div></div>
+            </div>
+            <div class="kpi-grid two">
+              <div class="card kpi two-col"><div class="small subtle">Potential Savings</div><div class="kpi-value positive">₹0</div><div class="small muted">vs lowest recorded</div></div>
+              <div class="card kpi two-col"><div class="small subtle">Actual Savings</div><div class="kpi-value positive">₹0</div><div class="small muted">vs usual shop</div></div>
+            </div>
+            <div class="card panel">
+              <h2 class="panel-title">💡 Smart Insights</h2>
+              <div class="panel-content"><div class="text-12 muted">No insights available yet. Record purchases to view analysis.</div></div>
+            </div>
+            <div class="card panel">
+              <h2 class="panel-title">📊 Price Movers</h2>
+              <div class="panel-content"><div class="text-12 muted">Repeat purchases of a product reveal price changes.</div></div>
+            </div>
+            <div class="heading-row"><h2 class="section-heading">Recent Transactions</h2><button class="button text-button" data-navigate="transactions">View All</button></div>
+            <div id="recentTransactions"><div class="empty-copy">No records registered yet.</div></div>
+          </div>
+        </section>
+
+        <section class="page" id="page-transactions">
+          <div class="card search-card"><div class="search-inner"><span aria-hidden="true">🔍</span><input id="transactionSearch" placeholder="Search description, shop..." aria-label="Search description, shop"></div></div>
+          <div class="filter-row">
+            <button class="button selected" data-filter="all">All</button>
+            <button class="button" data-filter="income">Income</button>
+            <button class="button" data-filter="expense">Expense</button>
+            <select id="transactionCategory" aria-label="Category filter"><option value="">Category</option></select>
+          </div>
+          <div id="transactionList"></div>
+          <button class="button primary float-add" id="addTransactionButton" aria-label="Add transaction">＋</button>
+        </section>
+
+        <section class="page" id="page-add-transaction">
+          <div class="section-stack">
+            <div class="card type-toggle">
+              <button class="button bold negative" id="expenseType">Expense</button>
+              <button class="button bold" id="incomeType" style="background:transparent;color:var(--text-sub)">Income</button>
+            </div>
+            <form class="section-stack" id="transactionForm">
+              <label class="field"><span class="field-label">Title / Description *</span><span class="input-wrap"><input name="title" placeholder="e.g. Salary, Groceries, Coffee" required minlength="2"></span></label>
+              <label class="field"><span class="field-label">Amount (₹) *</span><span class="input-wrap"><input name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></span></label>
+              <label class="field"><span class="field-label">Category *</span><span class="input-wrap"><select name="category" id="transactionFormCategory" required><option value="">Select category</option></select></span></label>
+              <label class="field"><span class="field-label">Date *</span><span class="input-wrap"><input name="date" type="date" required></span></label>
+              <label class="field"><span class="field-label">Payment Method</span><span class="input-wrap"><select name="payment"><option>UPI</option><option>Credit Card</option><option>Debit Card</option><option>Bank Transfer</option><option>Cash</option><option>Other</option></select></span></label>
+              <label class="field"><span class="field-label">Notes (Optional)</span><span class="input-wrap"><textarea name="notes" placeholder="Optional reference notes..."></textarea></span></label>
+              <div class="action-stack">
+                <button class="button bold primary" type="submit" style="height:48px;border-radius:12px">Save Record</button>
+                <button class="button bold secondary" type="button" data-navigate="transactions" style="height:48px;border-radius:12px">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="page" id="page-smart-shopping">
+          <div class="section-stack">
+            <form class="card form-card stack" id="purchaseForm">
+              <h2 class="form-card-title">🛒 Record Product Purchase</h2>
+              <label class="field"><span class="field-label">Product Name *</span><span class="input-wrap"><input name="product" placeholder="e.g. Rice, Milk, Cooking Oil" required minlength="2"></span></label>
+              <div class="form-grid">
+                <label class="field"><span class="field-label">Category</span><span class="input-wrap"><select name="category"><option>Groceries</option><option>Food</option><option>Household</option><option>Other</option></select></span></label>
+                <label class="field"><span class="field-label">Unit</span><span class="input-wrap"><select name="unit"><option>kg</option><option>g</option><option>litre</option><option>ml</option><option>piece</option><option>packet</option><option>dozen</option></select></span></label>
+              </div>
+              <div class="form-grid">
+                <label class="field"><span class="field-label">Quantity *</span><span class="input-wrap"><input name="quantity" type="number" min="0.01" step="0.001" value="1" required></span></label>
+                <label class="field"><span class="field-label">Unit Price (₹) *</span><span class="input-wrap"><input name="unitPrice" id="unitPrice" type="number" min="0.01" step="0.01" placeholder="0.00" required></span></label>
+              </div>
+              <div class="card" style="padding:10px 14px;background:var(--surface-hover);border-radius:12px">
+                <div class="row-between"><span class="text-13 subtle">Total Price (Auto)</span><strong class="text-18" id="calculatedTotal" style="font-size:18px;color:var(--accent-primary)">₹0.00</strong></div>
+              </div>
+              <div class="form-grid">
+                <label class="field"><span class="field-label">Shop Name *</span><span class="input-wrap"><input name="shop" placeholder="e.g. Supermart" required minlength="2"></span></label>
+                <label class="field"><span class="field-label">Shop Location</span><span class="input-wrap"><input name="location" placeholder="Optional"></span></label>
+              </div>
+              <div class="form-grid">
+                <label class="field"><span class="field-label">Payment</span><span class="input-wrap"><select name="payment"><option>UPI</option><option>Cash</option><option>Credit Card</option><option>Debit Card</option><option>Other</option></select></span></label>
+                <label class="field"><span class="field-label">Date</span><span class="input-wrap"><input name="date" type="date"></span></label>
+              </div>
+              <div class="small muted">ℹ Saving creates one linked expense transaction, so it is never counted twice.</div>
+              <button class="button bold primary" type="submit" style="height:48px;border-radius:12px">Save Purchase</button>
+            </form>
+            <h2 class="section-heading">Recent Purchases</h2>
+            <div id="purchaseList"><div class="empty-copy">No purchases recorded yet.</div></div>
+          </div>
+        </section>
+
+        <section class="page" id="page-shopping-list">
+          <div class="section-stack">
+            <div class="card stack">
+              <h2 class="form-card-title text-14">Add Planned Item</h2>
+              <form class="planned-form" id="plannedForm">
+                <label class="input-wrap"><input name="product" placeholder="Product" aria-label="Product" required minlength="2"></label>
+                <label class="input-wrap"><input name="quantity" type="number" min="0.01" step="0.01" value="1" aria-label="Quantity" required></label>
+                <label class="input-wrap"><select name="unit" aria-label="Unit"><option>kg</option><option>g</option><option>litre</option><option>ml</option><option>piece</option><option>packet</option><option>dozen</option></select></label>
+                <button class="button bold primary" type="submit">Add</button>
+              </form>
+            </div>
+            <div class="card summary-card">
+              <div class="stack" style="gap:8px">
+                <div class="row-between"><span class="text-13 subtle">Estimated Total:</span><strong class="text-16" id="plannedTotal">₹0.00</strong></div>
+                <div class="text-12 muted" id="budgetStatus">Set target budget in Settings</div>
+                <div class="row-between"><span class="text-12 subtle">Estimated Savings vs Usual:</span><strong class="text-14 positive">₹0.00</strong></div>
+              </div>
+            </div>
+            <h2 class="section-heading">Planned Items</h2>
+            <div id="plannedItems"><div class="empty-copy">Your list is empty. Add products you plan to buy.</div></div>
+          </div>
+        </section>
+
+        <section class="page" id="page-price-compare">
+          <div class="section-stack">
+            <form class="card stack" id="compareForm">
+              <h2 class="form-card-title text-15">Compare Product Across Shops</h2>
+              <div class="form-grid" style="grid-template-columns:minmax(0,1fr) 72px auto">
+                <label class="input-wrap"><input name="product" placeholder="Product (e.g. Rice)" required aria-label="Product"></label>
+                <label class="input-wrap"><input name="quantity" type="number" min="0.01" step="0.01" value="1" aria-label="Quantity"></label>
+                <button class="button bold primary" type="submit" style="min-height:40px;height:40px;padding:0 12px;border-radius:10px">Compare</button>
+              </div>
+            </form>
+            <div id="compareEmpty" class="empty-state">
+              <div class="emoji">🔍</div><h3>Search a Product</h3>
+              <p>Enter a product name above (e.g. 'Rice' or 'Cooking Oil') to compare its recorded prices across stores.</p>
+            </div>
+            <div id="compareResults" class="section-stack" hidden></div>
+          </div>
+        </section>
+
+        <section class="page" id="page-savings">
+          <div class="section-stack">
+            <div class="kpi-grid two">
+              <div class="card kpi two-col"><div class="small subtle">Actual Savings</div><div class="kpi-value positive">₹0</div><div class="tiny muted">vs usual shop</div></div>
+              <div class="card kpi two-col"><div class="small subtle">Potential Savings</div><div class="kpi-value">₹0</div><div class="tiny muted">vs lowest recorded</div></div>
+              <div class="card kpi two-col"><div class="small subtle">List Planning</div><div class="kpi-value">₹0</div><div class="tiny muted">Current list estimate</div></div>
+              <div class="card kpi two-col"><div class="small subtle">Bought via List</div><div class="kpi-value positive">₹0</div><div class="tiny muted">Subset of actual</div></div>
+            </div>
+            <p class="small muted footnote">Actual savings compare the unit price paid with the latest earlier price at your usual shop. Potential savings compare your most recent purchase with the lowest recorded price.</p>
+            <h2 class="section-heading">Actual Savings Log</h2><div class="text-12 muted">Buy a product at a shop other than your usual one, at a lower price, to see actual savings.</div>
+            <h2 class="section-heading">Monthly Actual Savings</h2><div class="text-12 muted">No monthly savings recorded yet.</div>
+            <h2 class="section-heading">Highest Potential Savings (Estimates)</h2><div class="text-12 muted">No comparison data. Record prices from at least two shops for a product.</div>
+          </div>
+        </section>
+
+        <section class="page" id="page-categories">
+          <div class="filter-row">
+            <button class="button selected" data-category-filter="all">All</button>
+            <button class="button" data-category-filter="expense">Expense</button>
+            <button class="button" data-category-filter="income">Income</button>
+            <span style="flex:1"></span>
+            <button class="button bold primary" id="addCategoryButton" style="height:36px;min-height:36px">＋ Add</button>
+          </div>
+          <div id="categoryList"><div class="empty-state"><div class="emoji">🏷️</div><h3>No categories found</h3></div></div>
+        </section>
+
+        <section class="page" id="page-shops">
+          <div class="section-stack">
+            <div class="card stack">
+              <h2 class="form-card-title text-14">Add New Shop</h2>
+              <form class="form-grid" id="shopForm" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto">
+                <label class="input-wrap" style="padding:0 8px"><input name="name" placeholder="Shop Name *" required minlength="2" style="font-size:13px"></label>
+                <label class="input-wrap" style="padding:0 8px"><input name="location" placeholder="Location" style="font-size:13px"></label>
+                <button class="button bold primary" type="submit" style="height:40px;min-height:40px;padding:0 14px;border-radius:10px">Add</button>
+              </form>
+            </div>
+            <p class="small muted footnote">Total spending indicates overall purchases. 'Lowest-price matches' counts products where this shop holds the lowest recorded unit price.</p>
+            <h2 class="section-heading">Registered Shops</h2>
+            <div id="shopList"><div class="empty-copy">No shops registered yet.</div></div>
+          </div>
+        </section>
+
+        <section class="page" id="page-settings">
+          <div class="section-stack">
+            <div class="card stack">
+              <h2 class="form-card-title text-14">🌐 Backend API Server URL</h2>
+              <div class="small muted">Set the Web API host (e.g. http://localhost:5283 or http://10.0.2.2:5283 for Android emulator).</div>
+              <form class="form-grid" id="apiForm" style="grid-template-columns:minmax(0,1fr) auto">
+                <label class="input-wrap" style="padding:0 8px"><input name="url" type="url" style="font-size:13px"></label>
+                <button class="button bold primary" type="submit" style="height:40px;min-height:40px;padding:0 14px;border-radius:10px">Update</button>
+              </form>
+            </div>
+            <div class="card stack" style="gap:16px">
+              <h2 class="form-card-title text-14">⚙️ Financial Preferences</h2>
+              <label class="settings-grid"><span><span class="settings-label">Currency Symbol</span><br><span class="small muted">Standard currency across cards</span></span><span class="input-wrap compact-input w80"><select id="currency" aria-label="Currency"><option>₹</option><option>$</option><option>€</option><option>£</option></select></span></label>
+              <label class="settings-grid"><span><span class="settings-label">Monthly Budget</span><br><span class="small muted">Total expense limit (0 = not set)</span></span><span class="input-wrap compact-input"><input id="monthBudget" type="number" min="0" placeholder="0" aria-label="Monthly budget" style="text-align:right;font-size:13px"></span></label>
+              <label class="settings-grid"><span><span class="settings-label">Shopping Budget</span><br><span class="small muted">Limit for product purchases</span></span><span class="input-wrap compact-input"><input id="shopBudget" type="number" min="0" placeholder="0" aria-label="Shopping budget" style="text-align:right;font-size:13px"></span></label>
+              <label class="settings-grid"><span><span class="settings-label">Shopping List Budget</span><br><span class="small muted">Budget for planned shopping items</span></span><span class="input-wrap compact-input"><input id="listBudget" type="number" min="0" placeholder="0" aria-label="Shopping list budget" style="text-align:right;font-size:13px"></span></label>
+              <button class="button bold primary" id="saveSettings" style="height:44px">Save Settings</button>
+            </div>
+            <div class="card stack">
+              <h2 class="form-card-title text-14">🧪 Demo Shopping Data</h2>
+              <div class="small muted">Sample purchases (Rice, Cooking Oil, Sugar, Milk across Shop A, B, C) for testing analysis.</div>
+              <div class="settings-actions">
+                <button class="button bold soft" id="loadDemo" style="height:40px">Load Demo</button>
+                <button class="button bold soft negative-text" id="clearDemo" style="height:40px">Remove Demo</button>
+              </div>
+            </div>
+            <div class="card stack">
+              <h2 class="form-card-title text-14">⚠️ Account &amp; Data Actions</h2>
+              <button class="button bold soft negative-text" id="resetData" style="height:42px">Wipe All Records (Reset)</button>
+              <button class="button bold negative" id="signOut" style="height:42px">Sign Out</button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <div class="drawer-backdrop" id="drawerBackdrop">
+        <aside class="drawer" aria-label="Navigation">
+          <div class="drawer-header">
+            <div class="drawer-brand">
+              <div class="brand-mark" aria-hidden="true">⚡</div>
+              <div><div class="brand-title">ExpenseTrack</div><div class="brand-subtitle">Smart Shopping &amp; Finance</div></div>
+            </div>
+          </div>
+          <nav class="drawer-nav">
+            <button data-navigate="dashboard">Dashboard</button>
+            <button data-navigate="transactions">Transactions</button>
+            <button data-navigate="smart-shopping">Smart Shopping</button>
+            <button data-navigate="shopping-list">Shopping List</button>
+            <button data-navigate="price-compare">Price Comparison</button>
+            <button data-navigate="savings">Savings Tracker</button>
+            <button data-navigate="categories">Categories</button>
+            <button data-navigate="shops">Shops Directory</button>
+            <button data-navigate="settings">Settings</button>
+          </nav>
+        </aside>
+      </div>
+    </div>
+    <dialog class="dialog" id="noticeDialog">
+      <h2 id="dialogTitle"></h2><p id="dialogMessage"></p>
+      <div class="dialog-actions"><button class="button secondary" id="dialogCancel" hidden>Cancel</button><button class="button primary" id="dialogOk">OK</button></div>
+    </dialog>
+    <dialog class="dialog" id="inputDialog">
+      <h2 id="inputDialogTitle"></h2><p id="inputDialogMessage"></p>
+      <form class="input-dialog-form" id="inputDialogForm">
+        <label class="field"><span class="field-label" id="inputDialogLabel"></span><span class="input-wrap"><input id="inputDialogInput" autocomplete="off"></span></label>
+        <label class="field" id="inputDialogChoiceField" style="margin-top:12px" hidden><span class="field-label" id="inputDialogChoiceLabel"></span><span class="input-wrap"><select id="inputDialogChoice"></select></span></label>
+        <div class="dialog-actions"><button class="button secondary" id="inputDialogCancel" type="button">Cancel</button><button class="button primary" type="submit">OK</button></div>
+      </form>
+    </dialog>
+  </div>
+  <script>
+    const titles = {
+      dashboard: "Dashboard", transactions: "Transactions", "add-transaction": "Record Transaction",
+      "smart-shopping": "Smart Shopping", "shopping-list": "Shopping List & Budget",
+      "price-compare": "Price Comparison", savings: "Savings Tracker", categories: "Categories",
+      shops: "Shops Directory", settings: "Settings"
+    };
+    const state = { transactions: [], purchases: [], planned: [], categories: [], shops: [], transactionType: "expense", transactionFilter: "all", categoryFilter: "all", current: "dashboard" };
+    let registerMode = false;
+    let dialogAction = null;
+    let inputResolver = null;
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+    const currency = () => $("#currency").value || "₹";
+    const money = value => `${currency()}${Number(value || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    function showNotice(title, message, action) {
+      $("#dialogTitle").textContent = title;
+      $("#dialogMessage").textContent = message;
+      dialogAction = action || null;
+      $("#dialogCancel").hidden = !action;
+      $("#noticeDialog").showModal();
+    }
+    $("#dialogCancel").addEventListener("click", () => $("#noticeDialog").close());
+    $("#dialogOk").addEventListener("click", () => {
+      $("#noticeDialog").close();
+      if (dialogAction) { const action = dialogAction; dialogAction = null; action(); }
+    });
+    function finishInput(value) {
+      const resolve = inputResolver;
+      inputResolver = null;
+      $("#inputDialog").close();
+      if (resolve) resolve(value);
+    }
+    function requestInput({ title, message, label, value = "", type = "text", choiceLabel, choices }) {
+      $("#inputDialogTitle").textContent = title;
+      $("#inputDialogMessage").textContent = message;
+      $("#inputDialogLabel").textContent = label;
+      $("#inputDialogInput").type = type;
+      $("#inputDialogInput").value = value;
+      const choiceField = $("#inputDialogChoiceField");
+      choiceField.hidden = !choices;
+      if (choices) {
+        $("#inputDialogChoiceLabel").textContent = choiceLabel;
+        $("#inputDialogChoice").innerHTML = choices.map(option => `<option value="${escapeHtml(option.value)}">${escapeHtml(option.label)}</option>`).join("");
+      }
+      return new Promise(resolve => {
+        inputResolver = resolve;
+        $("#inputDialog").showModal();
+        $("#inputDialogInput").focus();
+      });
+    }
+    $("#inputDialogForm").addEventListener("submit", event => {
+      event.preventDefault();
+      finishInput({ value: $("#inputDialogInput").value.trim(), choice: $("#inputDialogChoice").value });
+    });
+    $("#inputDialogCancel").addEventListener("click", () => finishInput(null));
+    $("#inputDialog").addEventListener("cancel", event => { event.preventDefault(); finishInput(null); });
+    function navigate(page) {
+      if (!titles[page]) return;
+      state.current = page;
+      $$(".page").forEach(section => section.classList.toggle("active", section.id === `page-${page}`));
+      $("#pageTitle").textContent = titles[page];
+      $("#backButton").style.display = page === "add-transaction" ? "grid" : "none";
+      $("#menuButton").style.display = page === "add-transaction" ? "none" : "grid";
+      $("#drawerBackdrop").classList.remove("open");
+      $("#pageScroll").scrollTop = 0;
+      $$(".drawer-nav button").forEach(button => button.classList.toggle("active", button.dataset.navigate === page));
+      if (page === "transactions") renderTransactions();
+      if (page === "categories") renderCategories();
+      if (page === "shops") renderShops();
+      if (page === "smart-shopping") renderPurchases();
+      if (page === "shopping-list") renderPlanned();
+    }
+    function enterApp() {
+      $("#loginScreen").style.display = "none";
+      $("#workspace").classList.add("active");
+      const name = $("#fullName").value.trim();
+      if (registerMode && name) {
+        $("#dashboardName").textContent = name;
+        $("#dashboardAvatar").textContent = name.split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase();
+      }
+      navigate("dashboard");
+    }
+    $("#menuButton").addEventListener("click", () => $("#drawerBackdrop").classList.add("open"));
+    $("#drawerBackdrop").addEventListener("click", event => { if (event.target === $("#drawerBackdrop")) $("#drawerBackdrop").classList.remove("open"); });
+    $("#backButton").addEventListener("click", () => navigate("transactions"));
+    document.addEventListener("click", event => {
+      const target = event.target.closest("[data-navigate]");
+      if (target) navigate(target.dataset.navigate);
+    });
+    $("#signInTab").addEventListener("click", () => setLoginMode(false));
+    $("#registerTab").addEventListener("click", () => setLoginMode(true));
+    function setLoginMode(isRegister) {
+      registerMode = isRegister;
+      $("#signInTab").classList.toggle("active", !isRegister);
+      $("#registerTab").classList.toggle("active", isRegister);
+      $("#fullNameField").hidden = !isRegister;
+      $("#loginSubmit").textContent = isRegister ? "Create Account" : "Sign In to Dashboard";
+      $("#loginError").hidden = true;
+    }
+    $("#loginForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const email = $("#email").value.trim();
+      const password = $("#password").value;
+      const name = $("#fullName").value.trim();
+      let error = "";
+      if (!email || !password) error = "Please enter both email and password.";
+      else if (registerMode && !name) error = "Please enter your full name.";
+      if (error) {
+        $("#loginError").textContent = error;
+        $("#loginError").hidden = false;
+        return;
+      }
+      enterApp();
+    });
+    function refreshCategoryOptions() {
+      const filter = $("#transactionCategory");
+      const selected = filter.value;
+      filter.innerHTML = '<option value="">Category</option>' + state.categories.map(item => `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)}</option>`).join("");
+      if (state.categories.some(item => item.name === selected)) filter.value = selected;
+      const formSelect = $("#transactionFormCategory");
+      const current = formSelect.value;
+      const type = state.transactionType;
+      formSelect.innerHTML = '<option value="">Select category</option>' + state.categories.filter(item => item.type === type).map(item => `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)}</option>`).join("");
+      if (state.categories.some(item => item.name === current && item.type === type)) formSelect.value = current;
+    }
+    function renderTransactionRow(item, compact) {
+      const isIncome = item.type === "income";
+      const color = isIncome ? "var(--positive)" : "var(--negative)";
+      const tint = isIncome ? "#122822" : "#2A1820";
+      return `<div class="card item-card" style="margin-bottom:8px">
+        <div class="${compact ? "transaction-grid" : "transaction-grid"}">
+          <div class="icon-box" style="background:${tint};color:${color}">${isIncome ? "↓" : "↑"}</div>
+          <div style="min-width:0"><div class="item-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(item.title)}</div><div class="item-subtitle">${escapeHtml(item.category)} · ${escapeHtml(item.date)}</div></div>
+          <div class="item-amount" style="color:${color}">${isIncome ? "+" : "−"}${money(item.amount)}</div>
+        </div>
+        ${compact ? "" : `<button class="button text-button" data-delete-transaction="${item.id}" style="display:block;margin:4px 0 -8px auto;color:var(--negative)">Delete</button>`}
+      </div>`;
+    }
+    function renderTransactions() {
+      refreshCategoryOptions();
+      const search = $("#transactionSearch").value.trim().toLowerCase();
+      const category = $("#transactionCategory").value;
+      const items = state.transactions.filter(item =>
+        (state.transactionFilter === "all" || item.type === state.transactionFilter) &&
+        (!category || item.category === category) &&
+        (!search || `${item.title} ${item.category} ${item.shop || ""}`.toLowerCase().includes(search))
+      );
+      $("#transactionList").innerHTML = items.length
+        ? items.map(item => renderTransactionRow(item, false)).join("")
+        : '<div class="empty-state"><div class="emoji">📄</div><h3>No records found</h3><p>Tap the \'+\' button below to add your first transaction.</p></div>';
+      $$(".filter-row [data-filter]").forEach(button => button.classList.toggle("selected", button.dataset.filter === state.transactionFilter));
+      $("#recentTransactions").innerHTML = state.transactions.length
+        ? state.transactions.slice(-3).reverse().map(item => renderTransactionRow(item, true)).join("")
+        : '<div class="empty-copy">No records registered yet.</div>';
+    }
+    $("#transactionSearch").addEventListener("input", renderTransactions);
+    $("#transactionCategory").addEventListener("change", renderTransactions);
+    $$(".filter-row [data-filter]").forEach(button => button.addEventListener("click", () => { state.transactionFilter = button.dataset.filter; renderTransactions(); }));
+    $("#addTransactionButton").addEventListener("click", () => navigate("add-transaction"));
+    $("#expenseType").addEventListener("click", () => setTransactionType("expense"));
+    $("#incomeType").addEventListener("click", () => setTransactionType("income"));
+    function setTransactionType(type) {
+      state.transactionType = type;
+      const expense = type === "expense";
+      $("#expenseType").style.background = expense ? "var(--negative)" : "transparent";
+      $("#expenseType").style.color = expense ? "#fff" : "var(--text-sub)";
+      $("#incomeType").style.background = expense ? "transparent" : "var(--positive)";
+      $("#incomeType").style.color = expense ? "var(--text-sub)" : "#fff";
+      refreshCategoryOptions();
+    }
+    $("#transactionForm").elements.date.valueAsDate = new Date();
+    $("#transactionForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const values = new FormData(form);
+      const title = String(values.get("title")).trim();
+      const amount = Number(values.get("amount"));
+      const category = String(values.get("category") || "");
+      if (title.length < 2 || amount <= 0 || !category) {
+        showNotice("Validation", !category ? "Please select a category. Add one from Categories first." : "Please enter a valid title and positive amount.");
+        return;
+      }
+      state.transactions.push({ id: Date.now(), title, amount, type: state.transactionType, category, date: values.get("date") });
+      form.reset();
+      form.elements.date.valueAsDate = new Date();
+      renderTransactions();
+      navigate("transactions");
+      showNotice("Success", "Transaction recorded successfully.");
+    });
+    $("#transactionList").addEventListener("click", event => {
+      const button = event.target.closest("[data-delete-transaction]");
+      if (!button) return;
+      const id = Number(button.dataset.deleteTransaction);
+      showNotice("Delete Transaction?", "Are you sure you want to delete this transaction?", () => {
+        state.transactions = state.transactions.filter(item => item.id !== id);
+        renderTransactions();
+      });
+    });
+    function renderPurchases() {
+      $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.slice().reverse().map(item =>
+        `<div class="card item-card" style="margin-bottom:8px"><div class="item-grid">
+          <div><div class="item-name">${escapeHtml(item.product)}</div><div class="item-subtitle">${escapeHtml(item.quantity)} ${escapeHtml(item.unit)} · ${escapeHtml(item.shop)} · ${escapeHtml(item.date)}</div></div>
+          <div class="item-amount" style="color:var(--accent-primary)">${money(item.quantity * item.unitPrice)}</div>
+          <button class="button text-button" data-delete-purchase="${item.id}" aria-label="Delete purchase" style="color:var(--negative)">🗑</button>
+        </div></div>`).join("") : '<div class="empty-copy">No purchases recorded yet.</div>';
+    }
+    $("#purchaseForm").elements.date.valueAsDate = new Date();
+    function updatePurchaseTotal() {
+      const quantity = Number($("#purchaseForm").elements.quantity.value);
+      const price = Number($("#unitPrice").value);
+      $("#calculatedTotal").textContent = money(quantity > 0 && price >= 0 ? quantity * price : 0);
+    }
+    $("#purchaseForm").addEventListener("input", updatePurchaseTotal);
+    $("#purchaseForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const values = new FormData(event.currentTarget);
+      const item = {
+        id: Date.now(), product: String(values.get("product")).trim(), quantity: Number(values.get("quantity")),
+        unit: String(values.get("unit")), unitPrice: Number(values.get("unitPrice")), shop: String(values.get("shop")).trim(),
+        location: String(values.get("location") || "").trim(), category: String(values.get("category")),
+        date: String(values.get("date") || new Date().toISOString().slice(0, 10)), demo: false
+      };
+      if (item.product.length < 2 || item.quantity <= 0 || item.unitPrice <= 0 || item.shop.length < 2) {
+        showNotice("Validation", "Enter a product, positive quantity and price, and a shop name.");
+        return;
+      }
+      state.purchases.push(item);
+      state.transactions.push({ id: Date.now() + 1, title: item.product, amount: item.quantity * item.unitPrice, type: "expense", category: item.category, date: item.date, shop: item.shop });
+      state.shops.push(...(state.shops.some(shop => shop.name.toLowerCase() === item.shop.toLowerCase()) ? [] : [{ name: item.shop, location: item.location, demo: false }]));
+      event.currentTarget.reset();
+      event.currentTarget.elements.quantity.value = 1;
+      event.currentTarget.elements.date.valueAsDate = new Date();
+      updatePurchaseTotal();
+      renderPurchases();
+      showNotice("Success", "Purchase saved! A linked expense transaction was automatically created.");
+    });
+    $("#purchaseList").addEventListener("click", event => {
+      const button = event.target.closest("[data-delete-purchase]");
+      if (!button) return;
+      const id = Number(button.dataset.deletePurchase);
+      showNotice("Delete Purchase?", "Delete this purchase and its linked expense?", () => {
+        state.purchases = state.purchases.filter(item => item.id !== id);
+        renderPurchases();
+      });
+    });
+    function renderPlanned() {
+      $("#plannedItems").innerHTML = state.planned.length ? state.planned.map(item =>
+        `<div class="card item-card" style="margin-bottom:8px"><div class="item-grid" style="grid-template-columns:minmax(0,1fr) auto auto auto">
+          <div><div class="item-name">${escapeHtml(item.product)}</div><div class="item-subtitle">${escapeHtml(item.quantity)} ${escapeHtml(item.unit)} · No recorded price</div></div>
+          <div class="item-amount gold">—</div>
+          <button class="button bold primary" data-buy-item="${item.id}" style="min-height:32px;height:32px;padding:0 10px;border-radius:8px;font-size:12px">Buy</button>
+          <button class="button text-button" data-delete-planned="${item.id}" aria-label="Delete item" style="color:var(--negative)">🗑</button>
+        </div></div>`).join("") : '<div class="empty-copy">Your list is empty. Add products you plan to buy.</div>';
+      $("#plannedTotal").textContent = money(0);
+    }
+    $("#plannedForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const values = new FormData(event.currentTarget);
+      state.planned.push({ id: Date.now(), product: String(values.get("product")).trim(), quantity: Number(values.get("quantity")), unit: String(values.get("unit")) });
+      event.currentTarget.reset();
+      event.currentTarget.elements.quantity.value = 1;
+      renderPlanned();
+    });
+    $("#plannedItems").addEventListener("click", async event => {
+      const del = event.target.closest("[data-delete-planned]");
+      if (del) {
+        state.planned = state.planned.filter(item => item.id !== Number(del.dataset.deletePlanned));
+        renderPlanned();
+      }
+      const buy = event.target.closest("[data-buy-item]");
+      if (buy) {
+        const item = state.planned.find(row => row.id === Number(buy.dataset.buyItem));
+        const shopResponse = await requestInput({ title: "Buy Item", message: `Enter shop name for ${item.product}:`, label: "Shop name", value: "Local Supermart" });
+        if (!shopResponse || !shopResponse.value) return;
+        const priceResponse = await requestInput({ title: "Unit Price", message: `Enter unit price per ${item.unit}:`, label: "Unit price", value: "50.00", type: "number" });
+        if (!priceResponse) return;
+        const shop = shopResponse.value;
+        const price = Number(priceResponse.value);
+        if (!Number.isFinite(price) || price <= 0) { showNotice("Validation", "Please enter a valid positive unit price."); return; }
+        state.purchases.push({ ...item, id: Date.now(), unitPrice: price, shop, date: new Date().toISOString().slice(0, 10), category: "Groceries", demo: false });
+        state.transactions.push({ id: Date.now() + 1, title: item.product, amount: item.quantity * price, type: "expense", category: "Groceries", date: new Date().toISOString().slice(0, 10), shop });
+        state.planned = state.planned.filter(row => row.id !== item.id);
+        renderPlanned();
+      }
+    });
+    $("#compareForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const values = new FormData(event.currentTarget);
+      const product = String(values.get("product")).trim();
+      const quantity = Number(values.get("quantity")) || 1;
+      const matches = state.purchases.filter(item => item.product.toLowerCase() === product.toLowerCase());
+      if (!matches.length) {
+        $("#compareResults").hidden = true;
+        $("#compareEmpty").hidden = false;
+        showNotice("No Match", "No comparison data found for this product.");
+        return;
+      }
+      const byShop = new Map();
+      matches.forEach(item => {
+        const previous = byShop.get(item.shop);
+        if (!previous || item.date > previous.date) byShop.set(item.shop, item);
+      });
+      const rows = [...byShop.values()].sort((a, b) => a.unitPrice - b.unitPrice);
+      const cheapest = rows[0], last = matches[matches.length - 1];
+      const saving = Math.max(0, last.unitPrice - cheapest.unitPrice);
+      $("#compareEmpty").hidden = true;
+      $("#compareResults").hidden = false;
+      $("#compareResults").innerHTML = `
+        <div class="kpi-grid two">
+          <div class="card kpi two-col"><div class="small subtle">Lowest Price</div><div class="kpi-value">${money(cheapest.unitPrice)}</div><div class="tiny muted">as of ${escapeHtml(cheapest.date)}</div></div>
+          <div class="card kpi two-col"><div class="small subtle">Cheapest Shop</div><div class="kpi-value">${escapeHtml(cheapest.shop)}</div><div class="tiny muted">${rows.length} shops compared</div></div>
+          <div class="card kpi two-col"><div class="small subtle">My Last Paid</div><div class="kpi-value">${money(last.unitPrice)}</div><div class="tiny muted">${escapeHtml(last.shop)} · ${escapeHtml(last.date)}</div></div>
+          <div class="card kpi two-col"><div class="small subtle">Saving vs Last</div><div class="kpi-value positive">${money(saving)}</div><div class="tiny muted">${money(saving * quantity)} on planned qty</div></div>
+        </div>
+        <div class="card panel price-suggestion"><div class="panel-title positive">💡 Smart Shopping Suggestion</div><div class="text-13" style="margin-top:6px">Buy at ${escapeHtml(cheapest.shop)} to save ${money(saving * quantity)} on ${quantity} ${escapeHtml(cheapest.unit)}.</div></div>
+        <h2 class="section-heading text-15">Recorded Prices Across Shops</h2>
+        ${rows.map((row, index) => `<div class="card data-row ${index === 0 ? "shop-price-low" : "shop-price-normal"}"><div class="row-between"><div><div class="item-name">${escapeHtml(row.shop)}</div><div class="item-subtitle">Recorded: ${escapeHtml(row.date)}</div></div><div style="text-align:right"><div class="item-name">${money(row.unitPrice)}/${escapeHtml(row.unit)}</div><div class="item-subtitle">Total: ${money(row.unitPrice * quantity)}</div></div><strong class="small ${index === 0 ? "positive" : "negative-text"}">${index === 0 ? "Lowest Price" : `+${money(row.unitPrice - cheapest.unitPrice)}`}</strong></div></div>`).join("")}
+        <h2 class="section-heading text-15">Price History (Latest Records)</h2>
+        ${matches.slice().reverse().map(row => `<div class="row-between history-row"><span class="text-13 subtle">${escapeHtml(row.date)} · ${escapeHtml(row.shop)}</span><strong class="text-13">${money(row.unitPrice)}</strong></div>`).join("")}`;
+    });
+    function renderCategories() {
+      const items = state.categories.filter(item => state.categoryFilter === "all" || item.type === state.categoryFilter);
+      $("#categoryList").innerHTML = items.length ? items.map(item =>
+        `<div class="card item-card" style="padding:16px;margin-bottom:10px"><div class="item-grid">
+          <div><div class="item-name" style="font-size:16px">${escapeHtml(item.name)}</div><div class="item-subtitle">${item.count || 0} entries</div></div>
+          <div style="text-align:right"><div class="item-name">${money(0)}</div><div style="margin-top:4px;padding:2px 8px;border-radius:10px;background:var(--surface);color:${item.type === "income" ? "var(--positive)" : "var(--negative)"};font-size:11px;font-weight:700;text-transform:uppercase">${escapeHtml(item.type)}</div></div>
+          <button class="button text-button" data-delete-category="${item.id}" aria-label="Delete category" style="color:var(--negative)">🗑</button>
+        </div></div>`).join("") : '<div class="empty-state"><div class="emoji">🏷️</div><h3>No categories found</h3></div>';
+      $$("[data-category-filter]").forEach(button => button.classList.toggle("selected", button.dataset.categoryFilter === state.categoryFilter));
+    }
+    $$("[data-category-filter]").forEach(button => button.addEventListener("click", () => { state.categoryFilter = button.dataset.categoryFilter; renderCategories(); }));
+    $("#addCategoryButton").addEventListener("click", async () => {
+      const response = await requestInput({
+        title: "New Category", message: "Enter category name and type:", label: "Category name",
+        choiceLabel: "Category type", choices: [{ value: "expense", label: "Expense" }, { value: "income", label: "Income" }]
+      });
+      if (!response || !response.value) return;
+      state.categories.push({ id: Date.now(), name: response.value, type: response.choice, count: 0 });
+      refreshCategoryOptions();
+      renderCategories();
+    });
+    $("#categoryList").addEventListener("click", event => {
+      const button = event.target.closest("[data-delete-category]");
+      if (!button) return;
+      const id = Number(button.dataset.deleteCategory);
+      showNotice("Delete Category?", "Are you sure you want to remove this category?", () => {
+        state.categories = state.categories.filter(item => item.id !== id);
+        refreshCategoryOptions();
+        renderCategories();
+      });
+    });
+    function renderShops() {
+      $("#shopList").innerHTML = state.shops.length ? state.shops.map(shop => {
+        const purchases = state.purchases.filter(item => item.shop === shop.name);
+        const spending = purchases.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
+        return `<div class="card item-card" style="margin-bottom:8px"><div class="item-grid">
+          <div><div class="item-name">${escapeHtml(shop.name)}</div><div class="item-subtitle">📍 ${escapeHtml(shop.location || "No location")}</div></div>
+          <div style="text-align:right"><div class="item-name">${money(spending)}</div><div class="tiny positive">${purchases.length} products · 0 lowest-price matches</div></div>
+          <button class="button text-button" data-delete-shop="${escapeHtml(shop.name)}" aria-label="Delete shop" style="color:var(--negative)">🗑</button>
+        </div></div>`;
+      }).join("") : '<div class="empty-copy">No shops registered yet.</div>';
+    }
+    $("#shopForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const values = new FormData(event.currentTarget);
+      const name = String(values.get("name")).trim();
+      if (name.length < 2) { showNotice("Validation", "Please enter a shop name."); return; }
+      if (!state.shops.some(shop => shop.name.toLowerCase() === name.toLowerCase())) state.shops.push({ name, location: String(values.get("location") || "").trim(), demo: false });
+      event.currentTarget.reset();
+      renderShops();
+    });
+    $("#shopList").addEventListener("click", event => {
+      const button = event.target.closest("[data-delete-shop]");
+      if (!button) return;
+      const name = button.dataset.deleteShop;
+      showNotice("Delete Shop?", `Remove '${name}'?`, () => {
+        state.shops = state.shops.filter(shop => shop.name !== name);
+        renderShops();
+      });
+    });
+    $("#apiForm").elements.url.value = "http://localhost:5283/";
+    $("#apiForm").addEventListener("submit", event => { event.preventDefault(); showNotice("Saved", `API Base URL updated to: ${event.currentTarget.elements.url.value}`); });
+    $("#saveSettings").addEventListener("click", () => {
+      const budget = Number($("#listBudget").value);
+      $("#budgetStatus").textContent = budget > 0 ? `Target budget: ${money(budget)}` : "Set target budget in Settings";
+      showNotice("Success", "Settings updated successfully.");
+    });
+    $("#loadDemo").addEventListener("click", () => {
+      if (state.purchases.some(item => item.demo)) { showNotice("Demo Data", "Demo shopping data is already loaded."); return; }
+      const date = new Date().toISOString().slice(0, 10);
+      const demoPurchases = [
+        { product: "Rice", shop: "Shop A", unit: "kg", unitPrice: 82, quantity: 1 },
+        { product: "Rice", shop: "Shop B", unit: "kg", unitPrice: 75, quantity: 1 },
+        { product: "Cooking Oil", shop: "Shop A", unit: "litre", unitPrice: 155, quantity: 1 },
+        { product: "Cooking Oil", shop: "Shop C", unit: "litre", unitPrice: 149, quantity: 1 },
+        { product: "Sugar", shop: "Shop B", unit: "kg", unitPrice: 48, quantity: 1 },
+        { product: "Milk", shop: "Shop C", unit: "litre", unitPrice: 62, quantity: 1 }
+      ].map((item, index) => ({ ...item, id: Date.now() + index, category: "Groceries", date, location: "", demo: true }));
+      state.purchases.push(...demoPurchases);
+      state.shops.push(...["Shop A", "Shop B", "Shop C"].map(name => ({ name, location: "", demo: true })).filter(newShop => !state.shops.some(shop => shop.name === newShop.name)));
+      state.categories.push(...[["Groceries", "expense"], ["Salary", "income"]].filter(([name]) => !state.categories.some(item => item.name === name)).map(([name, type], index) => ({ id: Date.now() + 20 + index, name, type, count: 0, demo: true })));
+      renderPurchases(); renderShops(); renderCategories(); renderTransactions();
+      showNotice("Demo Data", "Sample purchases and transactions loaded successfully!");
+    });
+    $("#clearDemo").addEventListener("click", () => showNotice("Remove Demo Data?", "Only records marked as Demo will be removed.", () => {
+      state.purchases = state.purchases.filter(item => !item.demo);
+      state.shops = state.shops.filter(item => !item.demo);
+      state.categories = state.categories.filter(item => !item.demo);
+      renderPurchases(); renderShops(); renderCategories(); renderTransactions();
+      showNotice("Success", "Demo data removed successfully.");
+    }));
+    $("#resetData").addEventListener("click", () => showNotice("Wipe All Records?", "This will permanently erase all transactions, purchases, shops, and shopping items.", () => {
+      state.transactions = []; state.purchases = []; state.shops = []; state.planned = [];
+      renderTransactions(); renderPurchases(); renderShops(); renderPlanned();
+      showNotice("Reset", "Ledger cleared successfully.");
+    }));
+    $("#signOut").addEventListener("click", () => showNotice("Sign Out?", "You will be returned to the login screen.", () => {
+      $("#workspace").classList.remove("active");
+      $("#loginScreen").style.display = "block";
+      $("#loginForm").reset();
+      setLoginMode(false);
+    }));
+    renderTransactions();
+    renderPurchases();
+    renderPlanned();
+    renderCategories();
+    renderShops();
+  </script>
+</body>
+</html>
